@@ -3,12 +3,12 @@ export const organizationInfo = {
   name: "Badan Kajian Strategis BPD HIPMI Jambi",
   shortName: "BKS HIPMI Jambi",
   tagline: "Merajut Data, Membangun Ekonomi Jambi",
-  description: "Lembaga *think-tank* independen di bawah naungan BPD HIPMI Jambi yang berfokus pada riset ekonomi, analisis kebijakan publik, dan pengembangan ekosistem kewirausahaan di Provinsi Jambi.",
-  address: "Graha HIPMI Jambi, Jl. Prof. Dr. Sri Sudewi, Kota Jambi, 36124",
-  email: "info@bks.hipmijambi.org",
+  description: "Lembaga think-tank independen di bawah naungan BPD HIPMI Jambi yang berfokus pada riset ekonomi, analisis kebijakan publik, dan pengembangan ekosistem kewirausahaan di Provinsi Jambi.",
+  address: "Sekretariat HIPMI Jambi, Jl. Mayjen Jusuf Singedekane, Kota Jambi, 36122",
+  email: "info@bakastra.hipmijambi.co.id",
   phone: "+62 741 1234 5678",
   social: {
-    instagram: "@bks_hipmijambi",
+    instagram: "@hipmijambi.bakastra",
     linkedin: "Badan Kajian Strategis HIPMI Jambi"
   }
 };
@@ -138,7 +138,7 @@ export const newsArticles = [
     title: "BKS HIPMI Jambi Sampaikan 5 Poin Rekomendasi Strategis kepada Gubernur",
     date: "12 Januari 2026",
     category: "Kegiatan",
-    excerpt: "Dalam audiensi tertutup, tim BKS HIPMI menyoroti pentingnya percepatan perbaikan infrastruktur jalan khusus batubara.",
+    excerpt: "Dalam audiensi tertutup, Bakastra HIPMI menyoroti pentingnya percepatan perbaikan infrastruktur jalan khusus batubara.",
     content: "..." // Isi lengkap bisa ditambahkan nanti
   },
   {
@@ -223,7 +223,7 @@ export const programs = [
 // Data FAQ (Untuk Halaman Kontak/Support)
 export const faqs = [
   {
-    question: "Bagaimana cara mengakses hasil riset BKS HIPMI Jambi?",
+    question: "Bagaimana cara mengakses hasil riset Bakastra HIPMI Jambi?",
     answer: "Semua publikasi ringkasan eksekutif dapat diunduh gratis di halaman Publikasi. Untuk laporan lengkap, silakan mengajukan permohonan via email."
   },
   {

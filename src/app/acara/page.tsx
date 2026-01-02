@@ -3,11 +3,11 @@ import { Calendar, MapPin, Clock, ArrowUpRight } from "lucide-react";
 
 export default function EventsPage() {
   return (
-    <div className="bg-white min-h-screen">
-      <section className="bg-hipmi-neutral text-white py-20">
+    <div className="relative z-10 bg-white min-h-screen">
+      <section className="bg-hipmi-gold text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl font-serif font-bold mb-4">Agenda & Kegiatan</h1>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             Ikuti berbagai forum diskusi, seminar, dan workshop untuk meningkatkan wawasan bisnis Anda.
           </p>
         </div>

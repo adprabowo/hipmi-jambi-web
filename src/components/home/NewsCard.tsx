@@ -55,7 +55,7 @@ export default function NewsCard({ title, date, category, excerpt, slug, index }
         {/* Link Baca Selengkapnya */}
         <Link 
             href={`/berita/${slug}`} 
-            className="inline-flex items-center text-sm font-semibold text-hipmi-gold hover:text-hipmi-green transition-colors mt-auto"
+            className="inline-flex items-center text-sm font-semibold text-hipmi-neutral hover:text-hipmi-green transition-colors mt-auto"
         >
             Baca Selengkapnya <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
         </Link>

@@ -6,18 +6,18 @@ import { ArrowRight, FileText, Users, BarChart3, Newspaper } from "lucide-react"
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
       {/* 1. Bagian Hero (Banner Utama) */}
       <Hero />
 
       {/* 2. Bagian Statistik Singkat */}
-      <section className="py-12 bg-white border-b">
+      <section className="relative z-10 py-12 bg-white border-b border-gray-100">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { label: "Publikasi Riset", value: "45+" },
-              { label: "Mitra Kolaborasi", value: "28" },
-              { label: "Rekomendasi Kebijakan", value: "12" },
+              { label: "Publikasi Riset", value: "10+" },
+              { label: "Mitra Kolaborasi", value: "20" },
+              { label: "Rekomendasi Kebijakan", value: "10" },
               { label: "Keterlibatan Ahli", value: "30+" },
             ].map((stat, i) => (
               <div key={i}>
@@ -30,7 +30,7 @@ export default function Home() {
       </section>
 
       {/* 3. Bagian Fitur / Layanan */}
-      <section className="py-20 bg-hipmi-light/50">
+      <section className="relative z-10 py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl font-serif font-bold text-hipmi-neutral mb-4">Fokus Kajian Kami</h2>
@@ -79,7 +79,7 @@ export default function Home() {
           {/* Header Section Berita */}
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
             <div className="max-w-2xl">
-                <div className="flex items-center gap-2 text-hipmi-gold font-bold uppercase tracking-wider text-sm mb-2">
+                <div className="flex items-center gap-2 text-hipmi-green font-bold uppercase tracking-wider text-sm mb-2">
                     <Newspaper className="w-4 h-4" /> Berita & Kegiatan
                 </div>
                 <h2 className="text-3xl md:text-4xl font-serif font-bold text-hipmi-neutral">

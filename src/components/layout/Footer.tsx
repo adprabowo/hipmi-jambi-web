@@ -17,7 +17,8 @@ const TikTokIcon = ({ className }: { className?: string }) => (
 
 export default function Footer() {
   return (
-    <footer className="bg-hipmi-green text-white pt-16 pb-8">
+    <footer className="bg-hipmi-gold text-white pt-16 pb-8">
+        <div className="absolute inset-0 bg-black/20 z-0"></div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           
@@ -27,48 +28,48 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-3 mb-4">
                 
                 {/* OPSI 1: Gambar Logo (Aktifkan jika file sudah ada di folder public) */}
-                {/* <Image 
+                <Image 
                   src="/logobakastra.png" 
                   alt="Logo Badan Kajian Strategis" 
-                  width={40} 
+                  width={160} 
                   height={40} 
-                  className="h-10 w-auto object-contain brightness-0 invert"
+                  className="h-20 w-auto object-contain brightness-0 invert"
                 /> 
-                */}
+                
 
                 {/* OPSI 2: Fallback Placeholder 'H' */}
-                <div className="h-10 w-10 bg-white/10 rounded-full flex items-center justify-center text-white font-bold border border-white/20">
-                  H
-                </div>
+                {/* <div className="h-10 w-10 bg-white/10 rounded-full flex items-center justify-center text-white font-bold border border-white/20">
+                  H 
+                </div> */}
 
                 {/* Teks Footer */}
-                <div>
+                {/* <div>
                     <h3 className="text-lg font-serif font-bold leading-none text-white">Badan Kajian Strategis</h3>
                     <p className="text-sm text-gray-300 mt-0.5">BPD HIPMI Jambi</p>
-                </div>
+                </div> */}
             </Link>
             
-            <p className="text-gray-300 text-sm leading-relaxed mb-6">
+            <p className="text-white-300 text-sm leading-relaxed mb-6">
               Pusat analisis strategis pengembangan kewirausahaan dan prospek ekonomi daerah Provinsi Jambi.
             </p>
             
             {/* PERUBAHAN: Ikon Media Sosial */}
             <div className="flex space-x-4">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-hipmi-gold transition" aria-label="Instagram">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white-300 hover:text-hipmi-gold transition" aria-label="Instagram">
                 <Instagram className="w-5 h-5"/>
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-hipmi-gold transition" aria-label="LinkedIn">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white-300 hover:text-hipmi-gold transition" aria-label="LinkedIn">
                 <Linkedin className="w-5 h-5"/>
               </a>
               {/* Mengganti Twitter dengan X */}
-              <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-hipmi-gold transition" aria-label="X (Twitter)">
+              <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-white-300 hover:text-hipmi-gold transition" aria-label="X (Twitter)">
                 <X className="w-5 h-5"/>
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-hipmi-gold transition" aria-label="Facebook">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white-300 hover:text-hipmi-gold transition" aria-label="Facebook">
                 <Facebook className="w-5 h-5"/>
               </a>
               {/* Menambahkan TikTok */}
-              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-hipmi-gold transition" aria-label="TikTok">
+              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="text-white-300 hover:text-hipmi-gold transition" aria-label="TikTok">
                 <TikTokIcon className="w-5 h-5"/>
               </a>
             </div>
@@ -76,8 +77,8 @@ export default function Footer() {
 
           {/* Kolom 2: Tautan Cepat */}
           <div>
-            <h4 className="text-lg font-bold mb-6 text-hipmi-gold">Tautan Cepat</h4>
-            <ul className="space-y-3 text-sm text-gray-300">
+            <h4 className="text-lg font-bold mb-6 text-white">Tautan Cepat</h4>
+            <ul className="space-y-3 text-sm text-white-300">
               <li><Link href="/publikasi" className="hover:text-white transition">Publikasi Riset</Link></li>
               <li><Link href="/acara" className="hover:text-white transition">Agenda Kegiatan</Link></li>
               <li><Link href="/program" className="hover:text-white transition">Program & Beasiswa</Link></li>
@@ -87,41 +88,41 @@ export default function Footer() {
 
           {/* Kolom 3: Kontak */}
           <div>
-            <h4 className="text-lg font-bold mb-6 text-hipmi-gold">Hubungi Kami</h4>
-            <ul className="space-y-4 text-sm text-gray-300">
+            <h4 className="text-lg font-bold mb-6 text-white">Hubungi Kami</h4>
+            <ul className="space-y-4 text-sm text-white-300">
               <li className="flex items-start">
-                <MapPin className="w-5 h-5 mr-3 mt-0.5 text-hipmi-gold flex-shrink-0" />
-                <span>Graha HIPMI Jambi, Jl. Prof. Dr. Sri Sudewi, Kota Jambi, 36124</span>
+                <MapPin className="w-5 h-5 mr-3 mt-0.5 text-white flex-shrink-0" />
+                <span>Sekretariat HIPMI Jambi, Jl. Mayjen Jusuf Singedekane, Kota Jambi, 36122</span>
               </li>
               <li className="flex items-center">
-                <Phone className="w-5 h-5 mr-3 text-hipmi-gold flex-shrink-0" />
+                <Phone className="w-5 h-5 mr-3 text-white flex-shrink-0" />
                 <span>+62 741 1234 5678</span>
               </li>
               <li className="flex items-center">
-                <Mail className="w-5 h-5 mr-3 text-hipmi-gold flex-shrink-0" />
-                <span>info@bks.hipmijambi.org</span>
+                <Mail className="w-5 h-5 mr-3 text-white flex-shrink-0" />
+                <span>info@bakastra.hipmijambi.co.id</span>
               </li>
             </ul>
           </div>
 
           {/* Kolom 4: Newsletter */}
           <div>
-            <h4 className="text-lg font-bold mb-6 text-hipmi-gold">Berlangganan</h4>
-            <p className="text-gray-300 text-sm mb-4">Dapatkan ringkasan eksekutif dan info acara terbaru.</p>
+            <h4 className="text-lg font-bold mb-6 text-white">Berlangganan</h4>
+            <p className="text-white-300 text-sm mb-4">Dapatkan ringkasan eksekutif dan info acara terbaru.</p>
             <form className="flex flex-col gap-2">
               <input 
                 type="email" 
                 placeholder="Email Anda" 
-                className="px-4 py-2 rounded bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-hipmi-gold"
+                className="px-4 py-2 rounded bg-white/12 border border-white/20 text-hipmi-neutral placeholder-white-400 focus:outline-none focus:border-white"
               />
-              <button className="bg-hipmi-gold text-hipmi-green font-bold py-2 px-4 rounded hover:bg-white transition">
+              <button className="bg-hipmi-green text-white font-bold py-2 px-4 rounded hover:bg-white transition">
                 Langganan
               </button>
             </form>
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 text-center text-sm text-gray-400">
+        <div className="border-t border-white/12 pt-8 text-center text-sm text-white-400">
           <p>&copy; {new Date().getFullYear()} Badan Kajian Strategis BPD HIPMI Jambi. All rights reserved.</p>
         </div>
       </div>

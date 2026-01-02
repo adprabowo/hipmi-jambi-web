@@ -24,7 +24,7 @@ export default function PublicationsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="relative z-10 min-h-screen bg-gray-50 pb-20 bg-white">
       {/* Header */}
       <div className="bg-white border-b sticky top-20 z-40 shadow-sm">
         <div className="container mx-auto px-4 py-12">

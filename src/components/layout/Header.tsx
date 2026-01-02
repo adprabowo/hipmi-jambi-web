@@ -27,25 +27,25 @@ export default function Header() {
           <Link href="/" className="flex-shrink-0 flex items-center gap-3 group">
             
             {/* OPSI 1: Gambar Logo Utama (Gunakan ini jika file logobakastra.png sudah ada di folder public) */}
-            {/* <Image 
+            <Image 
               src="/logobakastra.png" 
               alt="Logo Badan Kajian Strategis" 
-              width={40} 
+              width={160} 
               height={40} 
-              className="h-10 w-auto object-contain"
+              className="h-full w-auto object-contain"
             /> 
-            */}
+            
 
             {/* OPSI 2: Fallback Placeholder 'H' (Gunakan ini sementara gambar belum diupload) */}
-            <div className="h-10 w-10 bg-hipmi-green rounded-full flex items-center justify-center text-white font-bold">
-              H
-            </div>
+            {/* <div className="h-10 w-10 bg-hipmi-green rounded-full flex items-center justify-center text-white font-bold">
+              H 
+            </div> *}
 
             {/* PERUBAHAN TEKS: Posisi ditukar dan styling disesuaikan */}
-            <div className="hidden md:block">
-              <h1 className="text-lg font-serif font-bold text-hipmi-green leading-none">Badan Kajian Strategis</h1>
+            {/*<div className="hidden md:block">
+              <h1 className="text-lg font-serif font-bold text-hipmi-neutral leading-none">Badan Kajian Strategis</h1>
               <p className="text-sm text-hipmi-gray">BPD HIPMI Jambi</p>
-            </div>
+            </div> */}
           </Link>
           {/* ================================================================= */}
 

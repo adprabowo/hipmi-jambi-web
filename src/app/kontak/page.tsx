@@ -3,12 +3,12 @@ import { MapPin, Phone, Mail, Clock, Send, MessageSquare } from "lucide-react";
 
 export default function ContactPage() {
   return (
-    <div className="bg-white min-h-screen">
+    <div className="relative z-10 bg-white min-h-screen">
       {/* Header */}
-      <section className="bg-hipmi-neutral text-white py-16">
+      <section className="bg-hipmi-gold text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl font-serif font-bold mb-4">Hubungi Kami</h1>
-          <p className="text-gray-400">Kami siap mendengar masukan dan pertanyaan Anda.</p>
+          <p className="text-white">Kami siap mendengar masukan dan pertanyaan Anda.</p>
         </div>
       </section>
 

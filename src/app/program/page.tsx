@@ -10,9 +10,9 @@ const iconMap: { [key: string]: any } = {
 
 export default function ProgramPage() {
   return (
-    <div className="bg-white min-h-screen">
+    <div className="relative z-10 bg-white min-h-screen">
       {/* Header */}
-      <section className="bg-hipmi-green text-white py-20 relative overflow-hidden">
+      <section className="bg-hipmi-gold text-white py-20 relative overflow-hidden">
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-6">Program Unggulan</h1>
           <p className="text-lg text-gray-200 max-w-2xl mx-auto">
@@ -67,19 +67,19 @@ export default function ProgramPage() {
       {/* CTA Section */}
       <section className="bg-gray-50 py-20">
         <div className="container mx-auto px-4">
-          <div className="bg-hipmi-neutral rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 text-white relative overflow-hidden">
+          <div className="bg-hipmi-gold rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 text-white relative overflow-hidden">
             <div className="relative z-10 max-w-xl">
               <h2 className="text-3xl font-serif font-bold mb-4">Ingin Berkolaborasi?</h2>
-              <p className="text-gray-300 mb-6">
+              <p className="text-white mb-6">
                 Kami terbuka untuk kemitraan strategis dalam pengembangan program baru bersama institusi pendidikan dan korporasi.
               </p>
               <ul className="space-y-2 mb-0">
-                <li className="flex items-center gap-2"><CheckCircle2 className="text-hipmi-gold w-5 h-5"/> Sponsorship Program</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="text-hipmi-gold w-5 h-5"/> Tenaga Ahli & Mentor</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="text-white w-5 h-5"/> Sponsorship Program</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="text-white w-5 h-5"/> Tenaga Ahli & Mentor</li>
               </ul>
             </div>
             <div className="relative z-10">
-              <a href="/kontak" className="inline-block px-8 py-4 bg-hipmi-gold text-hipmi-neutral font-bold rounded-lg hover:bg-white transition shadow-lg shadow-hipmi-gold/20">
+              <a href="/kontak" className="inline-block px-8 py-4 bg-hipmi-green text-white font-bold rounded-lg hover:bg-white transition shadow-lg shadow-hipmi-gold/20">
                 Hubungi Kami
               </a>
             </div>

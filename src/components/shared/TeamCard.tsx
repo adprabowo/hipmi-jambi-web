@@ -1,4 +1,4 @@
-import { Linkedin } from "lucide-react";
+import { Instagram } from "lucide-react";
 
 interface TeamProps {
   name: string;
@@ -19,7 +19,7 @@ export default function TeamCard({ name, role, bio, image }: TeamProps) {
       </div>
       <div className="p-6 relative">
         <div className="absolute -top-6 right-6 w-12 h-12 bg-hipmi-gold rounded-full flex items-center justify-center text-white shadow-lg group-hover:bg-hipmi-green transition-colors">
-            <Linkedin className="w-5 h-5" />
+            <Instagram className="w-5 h-5" />
         </div>
         <p className="text-sm text-hipmi-green font-bold uppercase tracking-wider mb-1">{role}</p>
         <h3 className="text-xl font-serif font-bold text-hipmi-neutral mb-3">{name}</h3>

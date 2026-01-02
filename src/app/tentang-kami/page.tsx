@@ -7,10 +7,10 @@ export default function AboutPage() {
   return (
     <div className="bg-white">
       {/* Header Section */}
-      <section className="bg-hipmi-green py-20 text-white relative overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10 text-center">
+      <section className="relative z-10 bg-hipmi-gold py-20 text-white">
+       <div className="container mx-auto px-4 relative z-10 text-center">
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Tentang Kami</h1>
-          <p className="text-lg text-gray-200 max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-2xl mx-auto">
             Mengenal lebih dekat visi, misi, dan struktur kepemimpinan di balik BPD HIPMI Jambi dan Badan Kajian Strategis.
           </p>
         </div>
@@ -18,7 +18,7 @@ export default function AboutPage() {
       </section>
 
       {/* Overview Section */}
-      <section className="py-20">
+      <section className="relative z-10 py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-3xl font-serif font-bold text-hipmi-neutral mb-6">
@@ -41,7 +41,7 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="bg-hipmi-light p-8 rounded-xl border border-gray-100">
-              <div className="w-12 h-12 bg-hipmi-gold text-white rounded-lg flex items-center justify-center mb-6">
+              <div className="w-12 h-12 bg-hipmi-green text-white rounded-lg flex items-center justify-center mb-6">
                 <Lightbulb className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold mb-3 text-hipmi-neutral">Misi Kami</h3>
@@ -52,7 +52,7 @@ export default function AboutPage() {
               </ul>
             </div>
             <div className="bg-hipmi-light p-8 rounded-xl border border-gray-100">
-              <div className="w-12 h-12 bg-gray-800 text-white rounded-lg flex items-center justify-center mb-6">
+              <div className="w-12 h-12 bg-hipmi-green text-white rounded-lg flex items-center justify-center mb-6">
                 <Users className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold mb-3 text-hipmi-neutral">Nilai Inti</h3>
@@ -65,7 +65,7 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 1: BPD HIPMI JAMBI */}
-      <section className="py-20 bg-gray-50 border-t border-gray-100">
+      <section className="relative z-10 py-20 bg-gray-50 border-t border-gray-100 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-serif font-bold text-hipmi-neutral mb-4">Pengurus BPD HIPMI Jambi</h2>
