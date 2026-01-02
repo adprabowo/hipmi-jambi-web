@@ -61,9 +61,14 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
-            <button aria-label="Search" className="text-gray-500 hover:text-hipmi-green">
-              <Search className="w-5 h-5" />
-            </button>
+            <Link 
+                href="/publikasi" 
+                aria-label="Search" 
+                className="text-white hover:text-hipmi-green transition-colors"
+                >
+                <Search className="w-5 h-5" />
+            </Link>
+
             <Link 
               href="/dukung-kami" 
               className="bg-hipmi-green text-white px-5 py-2 rounded-md text-sm font-medium hover:bg-opacity-90 transition"
