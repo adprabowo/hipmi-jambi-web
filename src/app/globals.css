@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 26, 26, 26; /* Warna text #1A1A1A */
+  --background-rgb: 255, 255, 255; /* Warna background Putih */
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  /* Font akan ditangani oleh Tailwind via layout.tsx */
+}
