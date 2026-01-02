@@ -5,10 +5,10 @@ export default function SupportPage() {
   return (
     <div className="bg-white min-h-screen">
       {/* Header Section */}
-      <section className="bg-hipmi-gold text-white py-20 relative overflow-hidden z-0">
+      <section className="bg-hipmi-gold text-white py-20 relative z-10">
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Dukung Riset Kami</h1>
-          <p className="text-lg text-white/90 max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-2xl mx-auto">
             Berkontribusi dalam pembangunan ekonomi Jambi melalui dukungan terhadap riset independen dan pengembangan kapasitas pengusaha muda.
           </p>
         </div>

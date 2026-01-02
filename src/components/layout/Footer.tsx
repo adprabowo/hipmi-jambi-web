@@ -18,7 +18,6 @@ const TikTokIcon = ({ className }: { className?: string }) => (
 export default function Footer() {
   return (
     <footer className="bg-hipmi-gold text-white pt-16 pb-8">
-        <div className="absolute inset-0 bg-black/20 z-0"></div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           
@@ -92,7 +91,9 @@ export default function Footer() {
             <ul className="space-y-4 text-sm text-white-300">
               <li className="flex items-start">
                 <MapPin className="w-5 h-5 mr-3 mt-0.5 text-white flex-shrink-0" />
-                <span>Sekretariat HIPMI Jambi, Jl. Mayjen Jusuf Singedekane, Kota Jambi, 36122</span>
+                <span>Sekretariat HIPMI Jambi, <br />
+                      Jl. Mayjen Jusuf Singedekane, <br />
+                      Telanaipura, Kota Jambi, 36122</span>
               </li>
               <li className="flex items-center">
                 <Phone className="w-5 h-5 mr-3 text-white flex-shrink-0" />
