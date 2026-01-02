@@ -1,6 +1,8 @@
 import Hero from "@/components/home/Hero";
+import NewsCard from "@/components/home/NewsCard"; // Import Komponen Baru
+import { newsArticles } from "@/lib/dummy-data"; // Import Data Berita Anda
 import Link from "next/link";
-import { ArrowRight, FileText, Users, BarChart3 } from "lucide-react";
+import { ArrowRight, FileText, Users, BarChart3, Newspaper } from "lucide-react";
 
 export default function Home() {
   return (
@@ -66,6 +68,55 @@ export default function Home() {
                 </Link>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. SECTION BERITA TERBARU (Updated) */}
+      <section className="py-20 bg-white border-t border-gray-100">
+        <div className="container mx-auto px-4">
+          
+          {/* Header Section Berita */}
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+            <div className="max-w-2xl">
+                <div className="flex items-center gap-2 text-hipmi-gold font-bold uppercase tracking-wider text-sm mb-2">
+                    <Newspaper className="w-4 h-4" /> Berita & Kegiatan
+                </div>
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-hipmi-neutral">
+                    Kabar Terbaru Bakastra
+                </h2>
+            </div>
+            <Link 
+                href="/berita" 
+                className="hidden md:flex items-center px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-600 hover:border-hipmi-green hover:text-hipmi-green transition"
+            >
+                Lihat Semua Berita <ArrowRight className="w-4 h-4 ml-2" />
+            </Link>
+          </div>
+
+          {/* Grid Berita - Menggunakan Data newsArticles */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {newsArticles.map((news, index) => (
+              <NewsCard
+                key={news.id}
+                index={index} // Untuk variasi warna
+                title={news.title}
+                date={news.date}
+                category={news.category}
+                excerpt={news.excerpt}
+                slug={news.slug}
+              />
+            ))}
+          </div>
+
+          {/* Tombol Mobile (Hanya muncul di HP) */}
+          <div className="mt-8 md:hidden text-center">
+             <Link 
+                href="/berita" 
+                className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-600 hover:border-hipmi-green hover:text-hipmi-green transition"
+            >
+                Lihat Semua Berita <ArrowRight className="w-4 h-4 ml-2" />
+            </Link>
           </div>
         </div>
       </section>
