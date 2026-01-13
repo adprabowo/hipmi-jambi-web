@@ -16,29 +16,25 @@ const config: Config = {
       // ================= PERUBAHAN WARNA DI SINI =================
       colors: {
         hipmi: {
-          // WARNA PRIMER BARU (VIVID BLUE) - Menggantikan Hijau
-          // Digunakan untuk: Header links, Tombol Utama, Footer Background, Teks penting
+          // WARNA AKSEN (Hanya untuk Tombol & Link)
           green: {
-            DEFAULT: "#1278f8", // Biru Vivid Utama
-            dark: "#0e5ebf",    // Biru sedikit lebih gelap untuk efek hover
-            light: "#eef6ff",   // Biru sangat muda untuk background tipis
+            DEFAULT: "#1278f8", // Vivid Blue (Tetap)
+            dark: "#0b5ed7",    
+            light: "#eff6ff",   
           },
-
-          // WARNA SEKUNDER BARU (VIVID RED) - Menggantikan Emas
-          // Digunakan untuk: Aksen, Tombol sekunder, Badges, Highlights
           gold: {
-            DEFAULT: "#ea0001", // Merah Vivid Utama
-            dark: "#c40001",    // Merah sedikit lebih gelap untuk hover
-            light: "#fff1f1",   // Merah sangat muda untuk background tipis
+            DEFAULT: "#ea0001", // Vivid Red (Tetap)
+            dark: "#c40001",    
+            light: "#fef2f2",   
           },
 
-          // Warna Netral (Teks Gelap) - Tetap sama agar kontras terjaga
+          // WARNA TEKS UTAMA (Ubah jadi Hitam Pekat)
           neutral: {
-            DEFAULT: "#1a1a1a",
-            light: "#f8f9fa", // Background putih/abu terang (Mayoritas website)
+            DEFAULT: "#050505", // Hitam (Sebelumnya abu tua)
+            light: "#f3f4f6",   // Abu sangat muda
+            dark: "#000000",    // Hitam Absolut
           },
-          // Warna abu-abu untuk teks pendukung
-          gray: "#666666",
+          gray: "#525252", // Abu-abu medium untuk teks paragraf
         },
       },
        // ============================================================

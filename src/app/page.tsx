@@ -1,10 +1,23 @@
 import Hero from "@/components/home/Hero";
-import NewsCard from "@/components/home/NewsCard"; // Import Komponen Baru
-import { newsArticles } from "@/lib/dummy-data"; // Import Data Berita Anda
+import NewsCard from "@/components/home/NewsCard";
+import { db } from "@/db";
+import { news } from "@/db/schema";
+import { desc, eq } from "drizzle-orm";
 import Link from "next/link";
 import { ArrowRight, FileText, Users, BarChart3, Newspaper } from "lucide-react";
 
-export default function Home() {
+async function getLatestNews() {
+  return await db
+    .select()
+    .from(news)
+    .where(eq(news.published, true))
+    .orderBy(desc(news.createdAt))
+    .limit(3);
+}
+
+export default async function Home() {
+  const latestNews = await getLatestNews();
+
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* 1. Bagian Hero (Banner Utama) */}
@@ -41,20 +54,20 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { 
-                icon: BarChart3, 
-                title: "Analisis Ekonomi", 
-                desc: "Pemetaan potensi sektor unggulan daerah dan proyeksi pertumbuhan makro ekonomi Jambi." 
+              {
+                icon: BarChart3,
+                title: "Analisis Ekonomi",
+                desc: "Pemetaan potensi sektor unggulan daerah dan proyeksi pertumbuhan makro ekonomi Jambi."
               },
-              { 
-                icon: FileText, 
-                title: "Kebijakan Publik", 
-                desc: "Advokasi kebijakan pro-bisnis dan kajian dampak regulasi terhadap iklim investasi daerah." 
+              {
+                icon: FileText,
+                title: "Kebijakan Publik",
+                desc: "Advokasi kebijakan pro-bisnis dan kajian dampak regulasi terhadap iklim investasi daerah."
               },
-              { 
-                icon: Users, 
-                title: "Pengembangan UMKM", 
-                desc: "Strategi digitalisasi dan peningkatan kapasitas manajemen untuk pengusaha muda pemula." 
+              {
+                icon: Users,
+                title: "Pengembangan UMKM",
+                desc: "Strategi digitalisasi dan peningkatan kapasitas manajemen untuk pengusaha muda pemula."
               }
             ].map((item, i) => (
               <div key={i} className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border border-gray-100">
@@ -72,50 +85,54 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. SECTION BERITA TERBARU (Updated) */}
+      {/* 4. SECTION BERITA TERBARU */}
       <section className="py-20 bg-white border-t border-gray-100">
         <div className="container mx-auto px-4">
-          
+
           {/* Header Section Berita */}
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
             <div className="max-w-2xl">
-                <div className="flex items-center gap-2 text-hipmi-green font-bold uppercase tracking-wider text-sm mb-2">
-                    <Newspaper className="w-4 h-4" /> Berita & Kegiatan
-                </div>
-                <h2 className="text-3xl md:text-4xl font-serif font-bold text-hipmi-neutral">
-                    Kabar Terbaru Bakastra
-                </h2>
+              <div className="flex items-center gap-2 text-hipmi-green font-bold uppercase tracking-wider text-sm mb-2">
+                <Newspaper className="w-4 h-4" /> Berita &amp; Kegiatan
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-hipmi-neutral">
+                Kabar Terbaru Bakastra
+              </h2>
             </div>
-            <Link 
-                href="/berita" 
-                className="hidden md:flex items-center px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-600 hover:border-hipmi-green hover:text-hipmi-green transition"
+            <Link
+              href="/berita"
+              className="hidden md:flex items-center px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-600 hover:border-hipmi-green hover:text-hipmi-green transition"
             >
-                Lihat Semua Berita <ArrowRight className="w-4 h-4 ml-2" />
+              Lihat Semua Berita <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
           </div>
 
-          {/* Grid Berita - Menggunakan Data newsArticles */}
+          {/* Grid Berita - Dari Database */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {newsArticles.map((news, index) => (
-              <NewsCard
-                key={news.id}
-                index={index} // Untuk variasi warna
-                title={news.title}
-                date={news.date}
-                category={news.category}
-                excerpt={news.excerpt}
-                slug={news.slug}
-              />
-            ))}
+            {latestNews.length > 0 ? (
+              latestNews.map((item, index) => (
+                <NewsCard
+                  key={item.id}
+                  index={index}
+                  title={item.title}
+                  date={item.date}
+                  category={item.category}
+                  excerpt={item.excerpt}
+                  slug={item.slug}
+                />
+              ))
+            ) : (
+              <p className="col-span-3 text-center text-gray-500 py-12">Belum ada berita.</p>
+            )}
           </div>
 
-          {/* Tombol Mobile (Hanya muncul di HP) */}
+          {/* Tombol Mobile */}
           <div className="mt-8 md:hidden text-center">
-             <Link 
-                href="/berita" 
-                className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-600 hover:border-hipmi-green hover:text-hipmi-green transition"
+            <Link
+              href="/berita"
+              className="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-600 hover:border-hipmi-green hover:text-hipmi-green transition"
             >
-                Lihat Semua Berita <ArrowRight className="w-4 h-4 ml-2" />
+              Lihat Semua Berita <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
           </div>
         </div>

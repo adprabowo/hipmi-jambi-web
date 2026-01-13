@@ -1,14 +1,29 @@
-import { programs } from "@/lib/dummy-data";
-import { GraduationCap, Briefcase, Database, ArrowRight, CheckCircle2 } from "lucide-react";
+import { db } from "@/db";
+import { programs } from "@/db/schema";
+import { eq, desc } from "drizzle-orm";
+import { GraduationCap, Briefcase, Database, Users, FileText, ArrowRight, CheckCircle2 } from "lucide-react";
+import Link from "next/link";
 
-// Mapping string icon dari dummy-data ke komponen Lucide
-const iconMap: { [key: string]: any } = {
+// Mapping string icon ke komponen Lucide
+const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } = {
   "GraduationCap": GraduationCap,
   "Briefcase": Briefcase,
-  "Database": Database
+  "Database": Database,
+  "Users": Users,
+  "FileText": FileText
 };
 
-export default function ProgramPage() {
+async function getPrograms() {
+  return await db
+    .select()
+    .from(programs)
+    .where(eq(programs.published, true))
+    .orderBy(desc(programs.createdAt));
+}
+
+export default async function ProgramPage() {
+  const allPrograms = await getPrograms();
+
   return (
     <div className="relative z-10 bg-white min-h-screen">
       {/* Header */}
@@ -19,7 +34,6 @@ export default function ProgramPage() {
             Inisiatif strategis kami untuk mendukung pertumbuhan ekosistem kewirausahaan dan peningkatan kapasitas SDM di Jambi.
           </p>
         </div>
-        {/* Dekorasi Background */}
         <div className="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-hipmi-gold/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
       </section>
@@ -27,40 +41,45 @@ export default function ProgramPage() {
       {/* Program Grid */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
-            {programs.map((program, index) => {
-              const IconComponent = iconMap[program.icon] || Briefcase;
-              
-              return (
-                <div key={program.id} className="bg-white rounded-2xl p-8 border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col relative overflow-hidden group">
-                  {/* Status Badge */}
-                  <div className={`absolute top-4 right-4 text-xs font-bold px-3 py-1 rounded-full ${
-                    program.status === 'Buka' || program.status === 'Aktif' 
-                      ? 'bg-green-100 text-green-700' 
-                      : 'bg-yellow-100 text-yellow-700'
-                  }`}>
-                    {program.status}
-                  </div>
+          {allPrograms.length > 0 ? (
+            <div className="grid md:grid-cols-3 gap-8">
+              {allPrograms.map((program) => {
+                const IconComponent = iconMap[program.icon || ""] || Briefcase;
 
-                  <div className="w-14 h-14 bg-hipmi-light rounded-xl flex items-center justify-center text-hipmi-green mb-6 group-hover:bg-hipmi-green group-hover:text-white transition-colors">
-                    <IconComponent className="w-7 h-7" />
-                  </div>
-                  
-                  <h3 className="text-2xl font-serif font-bold text-hipmi-neutral mb-3">
-                    {program.title}
-                  </h3>
-                  
-                  <p className="text-gray-600 mb-8 leading-relaxed flex-grow">
-                    {program.description}
-                  </p>
+                return (
+                  <div key={program.id} className="bg-white rounded-2xl p-8 border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col relative overflow-hidden group">
+                    {/* Status Badge */}
+                    <div className={`absolute top-4 right-4 text-xs font-bold px-3 py-1 rounded-full ${program.status === 'Buka' || program.status === 'Aktif'
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-yellow-100 text-yellow-700'
+                      }`}>
+                      {program.status}
+                    </div>
 
-                  <button className="w-full py-3 border border-hipmi-green text-hipmi-green font-semibold rounded-lg hover:bg-hipmi-green hover:text-white transition flex items-center justify-center gap-2">
-                    Daftar Sekarang <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              );
-            })}
-          </div>
+                    <div className="w-14 h-14 bg-hipmi-light rounded-xl flex items-center justify-center text-hipmi-green mb-6 group-hover:bg-hipmi-green group-hover:text-white transition-colors">
+                      <IconComponent className="w-7 h-7" />
+                    </div>
+
+                    <h3 className="text-2xl font-serif font-bold text-hipmi-neutral mb-3">
+                      {program.title}
+                    </h3>
+
+                    <p className="text-gray-600 mb-8 leading-relaxed flex-grow">
+                      {program.description}
+                    </p>
+
+                    <button className="w-full py-3 border border-hipmi-green text-hipmi-green font-semibold rounded-lg hover:bg-hipmi-green hover:text-white transition flex items-center justify-center gap-2">
+                      Daftar Sekarang <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-20 text-gray-500">
+              <p>Belum ada program yang tersedia.</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -74,16 +93,15 @@ export default function ProgramPage() {
                 Kami terbuka untuk kemitraan strategis dalam pengembangan program baru bersama institusi pendidikan dan korporasi.
               </p>
               <ul className="space-y-2 mb-0">
-                <li className="flex items-center gap-2"><CheckCircle2 className="text-white w-5 h-5"/> Sponsorship Program</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="text-white w-5 h-5"/> Tenaga Ahli & Mentor</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="text-white w-5 h-5" />Sponsorship Program</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="text-white w-5 h-5" />Tenaga Ahli &amp; Mentor</li>
               </ul>
             </div>
             <div className="relative z-10">
-              <a href="/kontak" className="inline-block px-8 py-4 bg-hipmi-green text-white font-bold rounded-lg hover:bg-white transition shadow-lg shadow-hipmi-gold/20">
+              <Link href="/kontak" className="inline-block px-8 py-4 bg-hipmi-green text-white font-bold rounded-lg hover:bg-white transition shadow-lg shadow-hipmi-gold/20">
                 Hubungi Kami
-              </a>
+              </Link>
             </div>
-            {/* Pattern */}
             <div className="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-l from-white/5 to-transparent"></div>
           </div>
         </div>
