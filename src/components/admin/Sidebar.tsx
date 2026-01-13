@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
     LayoutDashboard,
     Newspaper,
@@ -12,9 +12,11 @@ import {
     LogOut,
     Menu,
     X,
+    Home,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { signOut } from "@/lib/auth-client";
 
 const menuItems = [
     { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -27,7 +29,22 @@ const menuItems = [
 
 export default function Sidebar() {
     const pathname = usePathname();
+    const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+    const handleLogout = async () => {
+        setIsLoggingOut(true);
+        try {
+            await signOut();
+            router.push("/login");
+            router.refresh();
+        } catch (error) {
+            console.error("Logout error:", error);
+        } finally {
+            setIsLoggingOut(false);
+        }
+    };
 
     return (
         <>
@@ -93,14 +110,22 @@ export default function Sidebar() {
                     </nav>
 
                     {/* Footer */}
-                    <div className="p-4 border-t border-gray-200">
+                    <div className="p-4 border-t border-gray-200 space-y-1">
                         <Link
                             href="/"
                             className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                         >
-                            <LogOut className="w-5 h-5" />
+                            <Home className="w-5 h-5" />
                             Kembali ke Website
                         </Link>
+                        <button
+                            onClick={handleLogout}
+                            disabled={isLoggingOut}
+                            className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+                        >
+                            <LogOut className="w-5 h-5" />
+                            {isLoggingOut ? "Logging out..." : "Logout"}
+                        </button>
                     </div>
                 </div>
             </aside>
