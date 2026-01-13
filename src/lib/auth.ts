@@ -13,4 +13,9 @@ export const auth = betterAuth({
         expiresIn: 60 * 60 * 24 * 7, // 7 days
         updateAge: 60 * 60 * 24, // 1 day
     },
+    trustedOrigins: [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "https://bakastrahipmijambi.vercel.app",
+    ],
 });
