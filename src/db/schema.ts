@@ -54,6 +54,7 @@ export const publications = pgTable('publications', {
     date: text('date').notNull(),
     author: text('author'),
     excerpt: text('excerpt'),
+    content: text('content'), // Full content/body of publication
     image: text('image'),
     downloadLink: text('download_link'),
     tags: text('tags'), // JSON string
