@@ -5,6 +5,9 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, FileText, Download, Calendar, Users } from "lucide-react";
 
+// Disable caching so updates are reflected immediately
+export const dynamic = 'force-dynamic';
+
 interface PageProps {
     params: Promise<{ slug: string }>;
 }

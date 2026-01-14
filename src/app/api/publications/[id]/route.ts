@@ -40,6 +40,7 @@ export async function PUT(
                 date: body.date,
                 author: body.author,
                 excerpt: body.excerpt,
+                content: body.content,
                 image: body.image,
                 downloadLink: body.downloadLink,
                 tags: JSON.stringify(body.tags || []),

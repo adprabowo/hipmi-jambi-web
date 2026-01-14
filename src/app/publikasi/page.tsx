@@ -3,6 +3,9 @@ import { publications } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import PublicationsClient from "./PublicationsClient";
 
+// Disable caching so updates are reflected immediately
+export const dynamic = 'force-dynamic';
+
 async function getPublications() {
   return await db
     .select()
