@@ -75,8 +75,8 @@ export default function PublicationsClient({ publications }: Props) {
                             <button
                                 onClick={() => setIsFilterOpen(!isFilterOpen)}
                                 className={`px-6 py-3 border rounded-lg font-medium flex items-center gap-2 transition ${isFilterOpen || selectedCategory !== "Semua"
-                                        ? "bg-hipmi-green text-white border-hipmi-green"
-                                        : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
+                                    ? "bg-hipmi-green text-white border-hipmi-green"
+                                    : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
                                     }`}
                             >
                                 <Filter className="w-5 h-5" />
@@ -93,8 +93,8 @@ export default function PublicationsClient({ publications }: Props) {
                                             key={cat}
                                             onClick={() => setSelectedCategory(cat)}
                                             className={`px-4 py-2 rounded-full text-sm font-medium transition ${selectedCategory === cat
-                                                    ? "bg-hipmi-gold text-white shadow-md"
-                                                    : "bg-white text-gray-600 border border-gray-200 hover:border-hipmi-gold hover:text-hipmi-gold"
+                                                ? "bg-hipmi-gold text-white shadow-md"
+                                                : "bg-white text-gray-600 border border-gray-200 hover:border-hipmi-gold hover:text-hipmi-gold"
                                                 }`}
                                         >
                                             {cat}
@@ -119,6 +119,7 @@ export default function PublicationsClient({ publications }: Props) {
                                 date={pub.date}
                                 excerpt={pub.excerpt || ""}
                                 slug={pub.slug}
+                                image={pub.image}
                             />
                         ))}
                     </div>

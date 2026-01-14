@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Calendar, ArrowRight, FileText } from "lucide-react";
 
 interface PublicationProps {
@@ -7,11 +8,28 @@ interface PublicationProps {
   date: string;
   excerpt: string;
   slug: string;
+  image?: string | null;
 }
 
-export default function PublicationCard({ title, category, date, excerpt, slug }: PublicationProps) {
+export default function PublicationCard({ title, category, date, excerpt, slug, image }: PublicationProps) {
   return (
     <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full group">
+      {/* Image */}
+      {image ? (
+        <div className="relative w-full h-48 overflow-hidden">
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+      ) : (
+        <div className="w-full h-48 bg-gradient-to-br from-hipmi-gold to-hipmi-green flex items-center justify-center">
+          <FileText className="w-12 h-12 text-white/50" />
+        </div>
+      )}
+
       <div className="p-6 flex-grow">
         <div className="flex items-center justify-between mb-4">
           <span className="text-xs font-bold text-hipmi-green bg-green-50 px-3 py-1 rounded-full border border-green-100">

@@ -1,14 +1,26 @@
-// PERBAIKAN: Import data baru (bpdHipmiLeaders & bakastraLeaders)
-import { organizationInfo, bpdHipmiLeaders, bakastraLeaders } from "@/lib/dummy-data";
+import { db } from "@/db";
+import { teamMembers } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import TeamCard from "@/components/shared/TeamCard";
 import { Target, Lightbulb, Users } from "lucide-react";
 
-export default function AboutPage() {
+async function getTeamMembers(category: string) {
+  return await db
+    .select()
+    .from(teamMembers)
+    .where(eq(teamMembers.category, category))
+    .orderBy(teamMembers.sortOrder);
+}
+
+export default async function AboutPage() {
+  const bpdMembers = await getTeamMembers("bpd");
+  const bakastraMembers = await getTeamMembers("bakastra");
+
   return (
     <div className="bg-white">
       {/* Header Section */}
       <section className="relative z-10 bg-hipmi-gold py-20 text-white">
-       <div className="container mx-auto px-4 relative z-10 text-center">
+        <div className="container mx-auto px-4 relative z-10 text-center">
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Tentang Kami</h1>
           <p className="text-lg text-white max-w-2xl mx-auto">
             Mengenal lebih dekat visi, misi, dan struktur kepemimpinan di balik BPD HIPMI Jambi dan Badan Kajian Strategis.
@@ -22,10 +34,12 @@ export default function AboutPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-3xl font-serif font-bold text-hipmi-neutral mb-6">
-              {organizationInfo.tagline}
+              Mendukung Pengusaha Muda Melalui Data dan Analisis
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed">
-              {organizationInfo.description}
+              Badan Kajian Strategis (Bakastra) BPD HIPMI Jambi adalah unit khusus yang berfokus pada riset,
+              analisis kebijakan, dan advokasi untuk mendukung pertumbuhan ekosistem kewirausahaan di Provinsi Jambi.
+              Kami menyediakan data-driven insights untuk membantu pengambilan keputusan strategis.
             </p>
           </div>
 
@@ -71,18 +85,24 @@ export default function AboutPage() {
             <h2 className="text-3xl font-serif font-bold text-hipmi-neutral mb-4">Pengurus BPD HIPMI Jambi</h2>
             <p className="text-gray-600">Kepemimpinan yang mendorong pertumbuhan pengusaha muda di Jambi.</p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {bpdHipmiLeaders.map((member) => (
-              <TeamCard
-                key={member.id}
-                name={member.name}
-                role={member.role}
-                bio={member.bio}
-                image={member.image}
-              />
-            ))}
-          </div>
+
+          {bpdMembers.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {bpdMembers.map((member) => (
+                <TeamCard
+                  key={member.id}
+                  name={member.name}
+                  role={member.role}
+                  bio={member.bio || ""}
+                  image={member.image || ""}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 text-gray-500">
+              Data pengurus BPD belum tersedia. Silakan tambahkan melalui Admin CMS.
+            </div>
+          )}
         </div>
       </section>
 
@@ -93,18 +113,24 @@ export default function AboutPage() {
             <h2 className="text-3xl font-serif font-bold text-hipmi-neutral mb-4">Basnom Badan Kajian Strategis (BAKASTRA)</h2>
             <p className="text-gray-600">Tim inti di balik riset dan analisis strategis organisasi.</p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {bakastraLeaders.map((member) => (
-              <TeamCard
-                key={member.id}
-                name={member.name}
-                role={member.role}
-                bio={member.bio}
-                image={member.image}
-              />
-            ))}
-          </div>
+
+          {bakastraMembers.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {bakastraMembers.map((member) => (
+                <TeamCard
+                  key={member.id}
+                  name={member.name}
+                  role={member.role}
+                  bio={member.bio || ""}
+                  image={member.image || ""}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 text-gray-500">
+              Data tim Bakastra belum tersedia. Silakan tambahkan melalui Admin CMS.
+            </div>
+          )}
         </div>
       </section>
 
