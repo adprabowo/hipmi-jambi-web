@@ -1,149 +1,197 @@
 "use client";
 
-import { useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, MeshDistortMaterial } from "@react-three/drei";
+import { useRef, useMemo, useState, useEffect } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { motion } from "framer-motion";
 
-// Neural Network Nodes
-function NeuralNodes() {
+// Colors for the brain particles - White and Blue palette for contrast with red background
+const COLORS = [
+    new THREE.Color(0xffffff), // White
+    new THREE.Color(0xe0f2fe), // Light Sky Blue
+    new THREE.Color(0x7dd3fc), // Sky Blue
+    new THREE.Color(0x38bdf8), // Bright Blue
+    new THREE.Color(0x0ea5e9), // Cyan Blue
+];
+
+// Custom shader material for brain particles
+const vertexShader = `
+  uniform vec3 uPointer;
+  uniform float uHover;
+  uniform float uRotation;
+  uniform float uSize;
+  
+  varying vec3 vColor;
+  
+  attribute vec3 aColor;
+  attribute float aRotation;
+  attribute float aSize;
+  
+  mat2 rotate2d(float angle) {
+    float s = sin(angle);
+    float c = cos(angle);
+    return mat2(c, -s, s, c);
+  }
+  
+  void main() {
+    vColor = aColor;
+    
+    vec3 pos = position;
+    
+    // Scale based on size attribute
+    pos *= aSize;
+    
+    // Rotation
+    pos.xz *= rotate2d(aRotation * 3.14159);
+    
+    // Add instance position
+    vec4 mvPosition = modelViewMatrix * instanceMatrix * vec4(pos, 1.0);
+    
+    // Hover effect - particles move toward pointer
+    if (uHover > 0.0) {
+      vec3 worldPos = (modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+      float dist = distance(worldPos, uPointer);
+      float influence = smoothstep(0.3, 0.0, dist) * uHover;
+      mvPosition.xyz += normalize(worldPos - uPointer) * influence * 0.05;
+    }
+    
+    gl_Position = projectionMatrix * mvPosition;
+  }
+`;
+
+const fragmentShader = `
+  varying vec3 vColor;
+  
+  void main() {
+    gl_FragColor = vec4(vColor, 1.0);
+  }
+`;
+
+function BrainModel() {
+    const meshRef = useRef<THREE.InstancedMesh>(null);
     const groupRef = useRef<THREE.Group>(null);
-    const nodesRef = useRef<THREE.InstancedMesh>(null);
+    const { camera, pointer } = useThree();
 
-    // Generate random node positions in a brain-like shape
-    const { positions, connections } = useMemo(() => {
-        const nodeCount = 60;
-        const positions: THREE.Vector3[] = [];
-        const connections: [number, number][] = [];
+    const [hovered, setHovered] = useState(false);
+    const pointerRef = useRef(new THREE.Vector3());
+    const hoverRef = useRef(0);
 
-        // Create nodes in a spherical brain-like distribution
-        for (let i = 0; i < nodeCount; i++) {
-            const phi = Math.acos(-1 + (2 * i) / nodeCount);
-            const theta = Math.sqrt(nodeCount * Math.PI) * phi;
+    // Load the brain model
+    const { scene } = useGLTF("/models/brain.glb");
 
-            const radius = 2 + Math.random() * 0.5;
-            const x = radius * Math.cos(theta) * Math.sin(phi) + (Math.random() - 0.5) * 0.5;
-            const y = radius * Math.sin(theta) * Math.sin(phi) + (Math.random() - 0.5) * 0.5;
-            const z = radius * Math.cos(phi) + (Math.random() - 0.5) * 0.5;
-
-            positions.push(new THREE.Vector3(x, y, z));
-        }
-
-        // Create connections between nearby nodes
-        for (let i = 0; i < nodeCount; i++) {
-            for (let j = i + 1; j < nodeCount; j++) {
-                const dist = positions[i].distanceTo(positions[j]);
-                if (dist < 1.5 && Math.random() > 0.3) {
-                    connections.push([i, j]);
-                }
+    // Extract vertices from brain mesh
+    const { positions, colors, rotations, sizes, count } = useMemo(() => {
+        let brainMesh: THREE.Mesh | null = null;
+        scene.traverse((child) => {
+            if ((child as THREE.Mesh).isMesh) {
+                brainMesh = child as THREE.Mesh;
             }
+        });
+
+        if (!brainMesh) return { positions: [], colors: [], rotations: [], sizes: [], count: 0 };
+
+        const geometry = (brainMesh as THREE.Mesh).geometry;
+        const posArray = geometry.attributes.position.array;
+        const count = geometry.attributes.position.count;
+
+        const positions: THREE.Vector3[] = [];
+        const colors: THREE.Color[] = [];
+        const rotations: number[] = [];
+        const sizes: number[] = [];
+
+        for (let i = 0; i < posArray.length; i += 3) {
+            positions.push(new THREE.Vector3(posArray[i], posArray[i + 1], posArray[i + 2]));
+            colors.push(COLORS[Math.floor(Math.random() * COLORS.length)]);
+            rotations.push(THREE.MathUtils.randFloat(-1, 1));
+            sizes.push(THREE.MathUtils.randFloat(0.3, 2));
         }
 
-        return { positions, connections };
-    }, []);
+        return { positions, colors, rotations, sizes, count };
+    }, [scene]);
 
+    // Setup instanced mesh
+    useEffect(() => {
+        if (!meshRef.current || count === 0) return;
+
+        const dummy = new THREE.Object3D();
+        const colorArray = new Float32Array(count * 3);
+        const rotationArray = new Float32Array(count);
+        const sizeArray = new Float32Array(count);
+
+        for (let i = 0; i < count; i++) {
+            dummy.position.copy(positions[i]);
+            dummy.updateMatrix();
+            meshRef.current.setMatrixAt(i, dummy.matrix);
+
+            colorArray[i * 3] = colors[i].r;
+            colorArray[i * 3 + 1] = colors[i].g;
+            colorArray[i * 3 + 2] = colors[i].b;
+
+            rotationArray[i] = rotations[i];
+            sizeArray[i] = sizes[i];
+        }
+
+        meshRef.current.instanceMatrix.needsUpdate = true;
+
+        // Add custom attributes
+        meshRef.current.geometry.setAttribute("aColor", new THREE.InstancedBufferAttribute(colorArray, 3));
+        meshRef.current.geometry.setAttribute("aRotation", new THREE.InstancedBufferAttribute(rotationArray, 1));
+        meshRef.current.geometry.setAttribute("aSize", new THREE.InstancedBufferAttribute(sizeArray, 1));
+    }, [count, positions, colors, rotations, sizes]);
+
+    // Animation loop
     useFrame((state) => {
-        if (groupRef.current) {
-            groupRef.current.rotation.y = state.clock.elapsedTime * 0.1;
-            groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.2) * 0.1;
+        if (!groupRef.current || !meshRef.current) return;
+
+        // Slow rotation
+        groupRef.current.rotation.y = state.clock.elapsedTime * 0.1;
+
+        // Update hover uniform
+        const material = meshRef.current.material as THREE.ShaderMaterial;
+        if (material.uniforms) {
+            // Smooth hover transition
+            hoverRef.current += (hovered ? 1 : 0 - hoverRef.current) * 0.1;
+            material.uniforms.uHover.value = hoverRef.current;
+            material.uniforms.uPointer.value = pointerRef.current;
         }
+
+        // Camera follows mouse slightly
+        camera.position.x += (pointer.x * 0.15 - camera.position.x) * 0.05;
+        camera.position.y += (pointer.y * 0.1 - camera.position.y) * 0.05;
+        camera.lookAt(0, 0, 0);
     });
 
-    return (
-        <group ref={groupRef}>
-            {/* Nodes */}
-            {positions.map((pos, i) => (
-                <mesh key={`node-${i}`} position={pos}>
-                    <sphereGeometry args={[0.06 + Math.random() * 0.04, 16, 16]} />
-                    <meshStandardMaterial
-                        color="#4ade80"
-                        emissive="#22c55e"
-                        emissiveIntensity={0.5}
-                    />
-                </mesh>
-            ))}
-
-            {/* Connections */}
-            {connections.map(([i, j], idx) => {
-                const start = positions[i];
-                const end = positions[j];
-                const mid = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
-                const direction = new THREE.Vector3().subVectors(end, start);
-                const length = direction.length();
-
-                return (
-                    <mesh key={`conn-${idx}`} position={mid}>
-                        <cylinderGeometry args={[0.008, 0.008, length, 4]} />
-                        <meshStandardMaterial
-                            color="#86efac"
-                            transparent
-                            opacity={0.4}
-                        />
-                        <primitive
-                            object={new THREE.Object3D()}
-                            ref={(el: THREE.Object3D | null) => {
-                                if (el) {
-                                    el.parent?.lookAt(end);
-                                    el.parent?.rotateX(Math.PI / 2);
-                                }
-                            }}
-                        />
-                    </mesh>
-                );
-            })}
-
-            {/* Central Brain Core */}
-            <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-                <mesh scale={1.2}>
-                    <icosahedronGeometry args={[1, 2]} />
-                    <MeshDistortMaterial
-                        color="#fbbf24"
-                        distort={0.3}
-                        speed={2}
-                        roughness={0.4}
-                        metalness={0.8}
-                        transparent
-                        opacity={0.6}
-                    />
-                </mesh>
-            </Float>
-        </group>
-    );
-}
-
-// Floating Particles
-function Particles() {
-    const particlesRef = useRef<THREE.Points>(null);
-
-    const particlePositions = useMemo(() => {
-        const positions = new Float32Array(200 * 3);
-        for (let i = 0; i < 200; i++) {
-            positions[i * 3] = (Math.random() - 0.5) * 8;
-            positions[i * 3 + 1] = (Math.random() - 0.5) * 8;
-            positions[i * 3 + 2] = (Math.random() - 0.5) * 8;
-        }
-        return positions;
-    }, []);
-
-    useFrame((state) => {
-        if (particlesRef.current) {
-            particlesRef.current.rotation.y = state.clock.elapsedTime * 0.02;
-        }
-    });
+    if (count === 0) return null;
 
     return (
-        <points ref={particlesRef}>
-            <bufferGeometry>
-                <bufferAttribute
-                    attach="attributes-position"
-                    count={200}
-                    array={particlePositions}
-                    itemSize={3}
+        <group
+            ref={groupRef}
+            onPointerEnter={() => setHovered(true)}
+            onPointerLeave={() => setHovered(false)}
+            onPointerMove={(e) => {
+                pointerRef.current.copy(e.point);
+            }}
+        >
+            <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
+                <boxGeometry args={[0.004, 0.004, 0.004]} />
+                <shaderMaterial
+                    vertexShader={vertexShader}
+                    fragmentShader={fragmentShader}
+                    wireframe
+                    uniforms={{
+                        uPointer: { value: new THREE.Vector3() },
+                        uHover: { value: 0 },
+                    }}
                 />
-            </bufferGeometry>
-            <pointsMaterial size={0.03} color="#ffffff" transparent opacity={0.6} />
-        </points>
+            </instancedMesh>
+
+            {/* Invisible mesh for raycasting */}
+            <mesh visible={false}>
+                <sphereGeometry args={[0.5, 32, 32]} />
+                <meshBasicMaterial />
+            </mesh>
+        </group>
     );
 }
 
@@ -152,19 +200,19 @@ export default function BrainAnimation() {
         <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="w-full h-full min-h-[400px]"
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="w-full h-full min-h-[500px]"
         >
             <Canvas
-                camera={{ position: [0, 0, 6], fov: 45 }}
+                camera={{ position: [0, 0, 0.95], fov: 75 }}
                 style={{ background: "transparent" }}
+                dpr={[1, 2]}
             >
-                <ambientLight intensity={0.5} />
-                <pointLight position={[10, 10, 10]} intensity={1} color="#fbbf24" />
-                <pointLight position={[-10, -10, -10]} intensity={0.5} color="#22c55e" />
-                <NeuralNodes />
-                <Particles />
+                <BrainModel />
             </Canvas>
         </motion.div>
     );
 }
+
+// Preload the brain model
+useGLTF.preload("/models/brain.glb");
