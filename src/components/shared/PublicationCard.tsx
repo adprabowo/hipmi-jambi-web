@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar, ArrowRight, FileText } from "lucide-react";
+import { useState } from "react";
 
 interface PublicationProps {
   title: string;
@@ -12,16 +15,23 @@ interface PublicationProps {
 }
 
 export default function PublicationCard({ title, category, date, excerpt, slug, image }: PublicationProps) {
+  const [imageError, setImageError] = useState(false);
+
+  // Check if image URL is valid (starts with http or /)
+  const hasValidImage = image && !imageError && (image.startsWith('http') || image.startsWith('/'));
+
   return (
     <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full group">
       {/* Image */}
-      {image ? (
+      {hasValidImage ? (
         <div className="relative w-full h-48 overflow-hidden">
           <Image
             src={image}
             alt={title}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
+            onError={() => setImageError(true)}
+            unoptimized={image.startsWith('http')}
           />
         </div>
       ) : (
