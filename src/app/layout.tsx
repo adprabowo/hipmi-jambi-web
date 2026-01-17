@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     canonical: "https://bakastrahipmijambi.vercel.app",
   },
   verification: {
-    google: "YOUR_GOOGLE_VERIFICATION_CODE", // Ganti setelah daftar Google Search Console
+    google: "1bc38a01dc47e160", // Google Search Console verification
   },
 };
 
