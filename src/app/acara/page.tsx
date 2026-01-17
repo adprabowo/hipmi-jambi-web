@@ -17,7 +17,7 @@ export default async function EventsPage() {
 
   return (
     <div className="relative z-10 bg-white min-h-screen">
-      <section className="bg-hipmi-gold text-white py-20">
+      <section className="bg-hipmi-green text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl font-serif font-bold mb-4">Agenda &amp; Kegiatan</h1>
           <p className="text-white max-w-2xl mx-auto">

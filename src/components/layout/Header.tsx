@@ -22,19 +22,19 @@ export default function Header() {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          
+
           {/* ================= PENTING: AREA LOGO & JUDUL BARU ================= */}
           <Link href="/" className="flex-shrink-0 flex items-center gap-3 group">
-            
+
             {/* OPSI 1: Gambar Logo Utama (Gunakan ini jika file logobakastra.png sudah ada di folder public) */}
-            <Image 
-              src="/logobakastra.png" 
-              alt="Logo Badan Kajian Strategis" 
-              width={160} 
-              height={40} 
+            <Image
+              src="/logobakastra.png"
+              alt="Logo Badan Kajian Strategis"
+              width={160}
+              height={40}
               className="h-full w-auto object-contain"
-            /> 
-            
+            />
+
 
             {/* OPSI 2: Fallback Placeholder 'H' (Gunakan ini sementara gambar belum diupload) */}
             {/* <div className="h-10 w-10 bg-hipmi-green rounded-full flex items-center justify-center text-white font-bold">
@@ -53,25 +53,25 @@ export default function Header() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex space-x-8 items-center">
             {navigation.map((item) => (
-              <Link 
-                key={item.name} 
+              <Link
+                key={item.name}
                 href={item.href}
                 className="text-sm font-medium text-gray-700 hover:text-hipmi-green transition-colors"
               >
                 {item.name}
               </Link>
             ))}
-            <Link 
-                href="/publikasi" 
-                aria-label="Search" 
-                className="text-white hover:text-hipmi-green transition-colors"
-                >
-                <Search className="w-5 h-5" />
+            <Link
+              href="/publikasi"
+              aria-label="Search"
+              className="text-white hover:text-hipmi-green transition-colors"
+            >
+              <Search className="w-5 h-5" />
             </Link>
 
-            <Link 
-              href="/dukung-kami" 
-              className="bg-hipmi-green text-white px-5 py-2 rounded-md text-sm font-medium hover:bg-opacity-90 transition"
+            <Link
+              href="/dukung-kami"
+              className="bg-hipmi-gold text-white px-5 py-2 rounded-md text-sm font-medium hover:bg-hipmi-gold-dark transition"
             >
               Dukung Kami
             </Link>
@@ -100,9 +100,9 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
-            <Link 
+            <Link
               href="/dukung-kami"
-              className="block w-full text-center mt-4 bg-hipmi-gold text-white px-3 py-3 rounded-md font-bold"
+              className="block w-full text-center mt-4 bg-hipmi-gold text-white px-3 py-3 rounded-md font-bold hover:bg-hipmi-gold-dark"
               onClick={() => setIsOpen(false)}
             >
               Dukung Kami

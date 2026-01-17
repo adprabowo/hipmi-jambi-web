@@ -11,7 +11,7 @@ export default function ContactPage() {
     subject: "Pertanyaan Umum", // Default value
     message: ""
   });
-  
+
   const [isSending, setIsSending] = useState(false);
 
   // 2. LOGIKA: Menangani perubahan input
@@ -27,8 +27,8 @@ export default function ContactPage() {
 
     // Simulasi loading sebentar agar terlihat keren
     setTimeout(() => {
-        // A. Format Pesan WhatsApp
-        const text = `
+      // A. Format Pesan WhatsApp
+      const text = `
 *Halo Admin Bakastra HIPMI Jambi,*
 Saya ingin mengirim pesan melalui website:
 
@@ -40,28 +40,28 @@ Saya ingin mengirim pesan melalui website:
 "${formData.message}"
         `.trim();
 
-        // B. Buat Link WhatsApp (Ganti nomor ini dengan nomor admin asli)
-        // Format: 628xxxxxxxx (Tanpa + atau 0 di depan)
-        const adminNumber = "6285377347995"; 
-        const waLink = `https://wa.me/${adminNumber}?text=${encodeURIComponent(text)}`;
+      // B. Buat Link WhatsApp (Ganti nomor ini dengan nomor admin asli)
+      // Format: 628xxxxxxxx (Tanpa + atau 0 di depan)
+      const adminNumber = "6285377347995";
+      const waLink = `https://wa.me/${adminNumber}?text=${encodeURIComponent(text)}`;
 
-        // C. Buka WhatsApp di tab baru
-        window.open(waLink, '_blank');
-        
-        setIsSending(false);
-        // Reset form (opsional)
-        setFormData({ name: "", email: "", subject: "Pertanyaan Umum", message: "" });
+      // C. Buka WhatsApp di tab baru
+      window.open(waLink, '_blank');
+
+      setIsSending(false);
+      // Reset form (opsional)
+      setFormData({ name: "", email: "", subject: "Pertanyaan Umum", message: "" });
     }, 1500);
   };
 
   return (
     <div className="bg-white min-h-screen">
       {/* Header */}
-      <section className="bg-hipmi-gold text-white py-20 relative z-10">
+      <section className="bg-hipmi-green text-white py-20 relative z-10">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl font-serif font-bold mb-4">Hubungi Kami</h1>
           <p className="text-white max-w-2xl mx-auto">
-            Punya pertanyaan seputar riset, kerjasama, atau keanggotaan? 
+            Punya pertanyaan seputar riset, kerjasama, atau keanggotaan?
             Tim kami siap membantu Anda.
           </p>
         </div>
@@ -71,7 +71,7 @@ Saya ingin mengirim pesan melalui website:
       <section className="relative z-10 bg-white py-20 -mt-10 rounded-t-3xl md:mt-0 md:rounded-none">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-12 max-w-6xl mx-auto">
-            
+
             {/* KOLOM KIRI: Informasi Kontak */}
             <div className="lg:w-1/3 space-y-8">
               <div>
@@ -84,13 +84,13 @@ Saya ingin mengirim pesan melalui website:
                     <div>
                       <p className="font-bold text-gray-900">Sekretariat HIPMI Jambi</p>
                       <p className="text-sm text-gray-600 leading-relaxed">
-                        Jl. Mayjen Jusuf Singedekane, <br /> 
-                        Telanaipura, Kota Jambi, 36122 <br/>
+                        Jl. Mayjen Jusuf Singedekane, <br />
+                        Telanaipura, Kota Jambi, 36122 <br />
                         Provinsi Jambi, Indonesia
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 bg-blue-50 text-hipmi-green rounded-lg flex items-center justify-center flex-shrink-0">
                       <Mail className="w-5 h-5" />
@@ -137,8 +137,8 @@ Saya ingin mengirim pesan melalui website:
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-700">Nama Lengkap</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
@@ -149,8 +149,8 @@ Saya ingin mengirim pesan melalui website:
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-700">Email</label>
-                    <input 
-                      type="email" 
+                    <input
+                      type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
@@ -163,7 +163,7 @@ Saya ingin mengirim pesan melalui website:
 
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-gray-700">Subjek</label>
-                  <select 
+                  <select
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
@@ -178,7 +178,7 @@ Saya ingin mengirim pesan melalui website:
 
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-gray-700">Pesan</label>
-                  <textarea 
+                  <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
@@ -189,8 +189,8 @@ Saya ingin mengirim pesan melalui website:
                   ></textarea>
                 </div>
 
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={isSending}
                   className="w-full py-4 bg-hipmi-green text-white font-bold rounded-lg hover:bg-blue-700 transition shadow-md flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >

@@ -27,7 +27,7 @@ export default async function ProgramPage() {
   return (
     <div className="relative z-10 bg-white min-h-screen">
       {/* Header */}
-      <section className="bg-hipmi-gold text-white py-20 relative overflow-hidden">
+      <section className="bg-hipmi-green text-white py-20 relative overflow-hidden">
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-6">Program Unggulan</h1>
           <p className="text-lg text-gray-200 max-w-2xl mx-auto">
@@ -50,8 +50,8 @@ export default async function ProgramPage() {
                   <div key={program.id} className="bg-white rounded-2xl p-8 border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col relative overflow-hidden group">
                     {/* Status Badge */}
                     <div className={`absolute top-4 right-4 text-xs font-bold px-3 py-1 rounded-full ${program.status === 'Buka' || program.status === 'Aktif'
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-yellow-100 text-yellow-700'
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-yellow-100 text-yellow-700'
                       }`}>
                       {program.status}
                     </div>

@@ -19,7 +19,7 @@ export default async function AboutPage() {
   return (
     <div className="bg-white">
       {/* Header Section */}
-      <section className="relative z-10 bg-hipmi-gold py-20 text-white">
+      <section className="relative z-10 bg-hipmi-green py-20 text-white">
         <div className="container mx-auto px-4 relative z-10 text-center">
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Tentang Kami</h1>
           <p className="text-lg text-white max-w-2xl mx-auto">

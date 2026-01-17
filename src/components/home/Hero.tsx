@@ -17,7 +17,7 @@ const BrainAnimation = dynamic(() => import("./BrainAnimation"), {
 
 export default function Hero() {
   return (
-    <section className="relative z-10 bg-hipmi-gold text-white min-h-[600px] lg:min-h-[700px] flex items-center overflow-hidden">
+    <section className="relative z-10 bg-hipmi-green text-white min-h-[600px] lg:min-h-[700px] flex items-center overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl" />
@@ -44,7 +44,7 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/publikasi"
-                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-hipmi-green hover:bg-hipmi-green/90 transition shadow-lg"
+                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-hipmi-gold hover:bg-hipmi-gold-dark transition shadow-lg"
               >
                 Baca Riset Terbaru
               </Link>
