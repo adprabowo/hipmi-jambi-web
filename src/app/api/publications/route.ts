@@ -2,6 +2,9 @@ import { db } from "@/db";
 import { publications } from "@/db/schema";
 import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
+import { notifyGoogleIndexing } from "@/lib/google-indexing";
+
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://bakastrahipmijambi.vercel.app';
 
 // GET /api/publications - List all publications
 export async function GET() {
@@ -27,13 +30,32 @@ export async function POST(request: NextRequest) {
             date: body.date,
             author: body.author,
             excerpt: body.excerpt,
+            content: body.content,
             image: body.image,
             downloadLink: body.downloadLink,
             tags: JSON.stringify(body.tags || []),
             published: body.published ?? true,
         }).returning();
 
-        return NextResponse.json(newPublication[0], { status: 201 });
+        const publication = newPublication[0];
+
+        // Notify Google Indexing API if publication is published
+        if (publication.published && process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
+            const publicationUrl = `${BASE_URL}/publikasi/${publication.slug}`;
+
+            // Fire and forget - don't block response
+            notifyGoogleIndexing(publicationUrl, 'URL_UPDATED')
+                .then(result => {
+                    if (result.success) {
+                        console.log(`[Google Indexing] Notified for new publication: ${publicationUrl}`);
+                    } else {
+                        console.error(`[Google Indexing] Failed for: ${publicationUrl}`, result.error);
+                    }
+                })
+                .catch(err => console.error('[Google Indexing] Error:', err));
+        }
+
+        return NextResponse.json(publication, { status: 201 });
     } catch (error) {
         console.error("Error creating publication:", error);
         return NextResponse.json({ error: "Failed to create publication" }, { status: 500 });
