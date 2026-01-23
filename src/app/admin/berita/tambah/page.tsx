@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Save } from "lucide-react";
+import RichTextEditor from "@/components/admin/RichTextEditor";
 
 export default function TambahBeritaPage() {
     const router = useRouter();
@@ -145,11 +146,9 @@ export default function TambahBeritaPage() {
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Konten</label>
-                        <textarea
-                            value={formData.content}
-                            onChange={(e) => setFormData((prev) => ({ ...prev, content: e.target.value }))}
-                            rows={10}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hipmi-green focus:border-transparent"
+                        <RichTextEditor
+                            content={formData.content}
+                            onChange={(content) => setFormData((prev) => ({ ...prev, content }))}
                             placeholder="Isi lengkap berita..."
                         />
                     </div>

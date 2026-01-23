@@ -72,13 +72,13 @@ export default async function NewsDetailPage(props: PageProps) {
                 )}
 
                 {/* Isi Konten */}
-                <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+                <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed text-justify">
                     <p className="font-semibold text-xl text-gray-900 mb-6">
                         {newsItem.excerpt}
                     </p>
 
                     {newsItem.content ? (
-                        <p>{newsItem.content}</p>
+                        <div dangerouslySetInnerHTML={{ __html: newsItem.content }} />
                     ) : (
                         <>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
