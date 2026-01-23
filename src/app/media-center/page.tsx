@@ -4,6 +4,9 @@ import { db } from "@/db";
 import { news } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 
+// Disable caching so CMS updates are reflected immediately
+export const dynamic = 'force-dynamic';
+
 async function getLatestNews() {
   return await db
     .select()

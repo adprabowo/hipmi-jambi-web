@@ -6,6 +6,9 @@ import { desc, eq } from "drizzle-orm";
 import Link from "next/link";
 import { ArrowRight, FileText, Users, BarChart3, Newspaper } from "lucide-react";
 
+// Disable caching so CMS updates are reflected immediately
+export const dynamic = 'force-dynamic';
+
 async function getLatestNews() {
   return await db
     .select()
