@@ -12,6 +12,7 @@ const navigation = [
   { name: "Publikasi", href: "/publikasi" },
   { name: "Acara", href: "/acara" },
   { name: "Program", href: "/program" },
+  { name: "Berita", href: "/berita" },
   { name: "Kontak", href: "/kontak" },
 ];
 
