@@ -6,8 +6,61 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Tag, User } from "lucide-react";
 
+import { Metadata, ResolvingMetadata } from "next";
+
 interface PageProps {
     params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata(
+    props: PageProps,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+    const params = await props.params;
+    const slug = params.slug;
+
+    // Fetch news
+    const result = await db.select().from(news).where(eq(news.slug, slug)).limit(1);
+    const newsItem = result[0];
+
+    if (!newsItem) {
+        return {
+            title: "Berita Tidak Ditemukan",
+        };
+    }
+
+    // Base URL configuration
+    const baseUrl = "https://bakastrahipmijambi.vercel.app";
+
+    // Handle Image URL
+    let imageUrl = newsItem.image;
+    if (imageUrl && imageUrl.startsWith('/')) {
+        imageUrl = `${baseUrl}${imageUrl}`;
+    }
+
+    const previousImages = (await parent).openGraph?.images || [];
+
+    return {
+        title: newsItem.title,
+        description: newsItem.excerpt,
+        openGraph: {
+            title: newsItem.title,
+            description: newsItem.excerpt,
+            url: `${baseUrl}/berita/${newsItem.slug}`,
+            siteName: 'Badan Kajian Strategis HIPMI Jambi',
+            images: imageUrl ? [imageUrl, ...previousImages] : previousImages,
+            locale: 'id_ID',
+            type: 'article',
+            publishedTime: newsItem.createdAt?.toISOString(),
+            authors: ['Admin Bakastra'],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: newsItem.title,
+            description: newsItem.excerpt,
+            images: imageUrl ? [imageUrl] : [],
+        }
+    };
 }
 
 export default async function NewsDetailPage(props: PageProps) {
