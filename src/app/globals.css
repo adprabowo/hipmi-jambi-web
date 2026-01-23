@@ -27,3 +27,40 @@
     text-wrap: balance;
   }
 }
+
+/* Custom spacing for Rich Text Content */
+.rich-text p {
+  margin-bottom: 1.5em;
+  line-height: 1.8;
+}
+
+.rich-text ul, .rich-text ol {
+  margin-bottom: 1.5em;
+  padding-left: 1.5em;
+}
+
+.rich-text li {
+  margin-bottom: 0.5em;
+}
+
+.rich-text h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.rich-text h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+}
+
+.rich-text blockquote {
+  border-left-width: 4px;
+  border-color: #e5e7eb;
+  padding-left: 1rem;
+  font-style: italic;
+  margin-bottom: 1.5em;
+}

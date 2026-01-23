@@ -78,7 +78,7 @@ export default async function NewsDetailPage(props: PageProps) {
                     </p>
 
                     {newsItem.content ? (
-                        <div dangerouslySetInnerHTML={{ __html: newsItem.content }} />
+                        <div className="rich-text" dangerouslySetInnerHTML={{ __html: newsItem.content }} />
                     ) : (
                         <>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
