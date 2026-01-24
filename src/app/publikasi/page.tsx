@@ -2,6 +2,16 @@ import { db } from "@/db";
 import { publications } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import PublicationsClient from "./PublicationsClient";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Perpustakaan Riset',
+  description: 'Koleksi lengkap analisis kebijakan, laporan ekonomi, dan jurnal riset dari Bakastra HIPMI Jambi.',
+  openGraph: {
+    title: 'Perpustakaan Riset | Bakastra HIPMI Jambi',
+    description: 'Akses koleksi lengkap analisis kebijakan, laporan ekonomi, dan jurnal riset kami.',
+  },
+};
 
 // Disable caching so updates are reflected immediately
 export const dynamic = 'force-dynamic';

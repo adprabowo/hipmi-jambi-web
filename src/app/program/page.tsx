@@ -3,6 +3,16 @@ import { programs } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { GraduationCap, Briefcase, Database, Users, FileText, ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Program Unggulan',
+  description: 'Inisiatif strategis Bakastra HIPMI Jambi untuk mendukung pertumbuhan ekosistem kewirausahaan dan SDM di Jambi.',
+  openGraph: {
+    title: 'Program Unggulan | Bakastra HIPMI Jambi',
+    description: 'Inisiatif strategis kami untuk mendukung pertumbuhan ekosistem kewirausahaan dan peningkatan kapasitas SDM di Jambi.',
+  },
+};
 
 // Mapping string icon ke komponen Lucide
 const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } = {

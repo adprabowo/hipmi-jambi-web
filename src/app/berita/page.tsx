@@ -4,6 +4,16 @@ import { db } from "@/db";
 import { news } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { Newspaper } from "lucide-react";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Berita & Kegiatan',
+    description: 'Berita terbaru, artikel informatif, dan dokumentasi kegiatan organisasi HIPMI Jambi.',
+    openGraph: {
+        title: 'Berita & Kegiatan | Bakastra HIPMI Jambi',
+        description: 'Ikuti perkembangan terbaru, kegiatan organisasi, dan artikel informatif dari Badan Kajian Strategis HIPMI Jambi.',
+    },
+};
 
 // Disable caching so CMS updates are reflected immediately
 export const dynamic = 'force-dynamic';

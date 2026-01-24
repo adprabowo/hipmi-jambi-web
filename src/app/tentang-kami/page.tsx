@@ -3,6 +3,16 @@ import { teamMembers } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import TeamCard from "@/components/shared/TeamCard";
 import { Target, Lightbulb, Users } from "lucide-react";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Tentang Kami',
+  description: 'Profil BPD HIPMI Jambi dan Badan Kajian Strategis (Bakastra). Visi, Misi, dan Struktur Kepengurusan.',
+  openGraph: {
+    title: 'Tentang Kami | Bakastra HIPMI Jambi',
+    description: 'Mengenal lebih dekat visi, misi, dan struktur kepemimpinan di balik BPD HIPMI Jambi dan Badan Kajian Strategis.',
+  },
+};
 
 // Disable caching so updates are reflected immediately
 export const dynamic = 'force-dynamic';

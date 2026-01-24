@@ -3,6 +3,16 @@ import { events } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { MapPin, Clock, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Agenda & Kegiatan',
+  description: 'Jadwal kegiatan, diskusi forum, seminar, dan workshop terbaru dari Bakastra dan BPD HIPMI Jambi.',
+  openGraph: {
+    title: 'Agenda & Kegiatan | Bakastra HIPMI Jambi',
+    description: 'Ikuti berbagai forum diskusi, seminar, dan workshop untuk meningkatkan wawasan bisnis Anda.',
+  },
+};
 
 async function getEvents() {
   return await db
