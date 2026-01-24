@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next'
 import { db } from "@/db";
-import { news } from "@/db/schema";
+import { news, publications } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -20,6 +20,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${baseUrl}/berita/${item.slug}`,
         lastModified: item.updatedAt || item.createdAt || new Date(),
         changeFrequency: 'weekly' as const,
+        priority: 0.7,
+    }));
+
+    // Fetch all published publications
+    const allPublications = await db
+        .select({
+            slug: publications.slug,
+            updatedAt: publications.updatedAt,
+            createdAt: publications.createdAt,
+        })
+        .from(publications)
+        .where(eq(publications.published, true));
+
+    const publicationUrls = allPublications.map((item) => ({
+        url: `${baseUrl}/publikasi/${item.slug}`,
+        lastModified: item.updatedAt || item.createdAt || new Date(),
+        changeFrequency: 'monthly' as const,
         priority: 0.7,
     }));
 
@@ -80,5 +97,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
     ]
 
-    return [...staticRoutes, ...newsUrls]
+    return [...staticRoutes, ...newsUrls, ...publicationUrls]
 }
