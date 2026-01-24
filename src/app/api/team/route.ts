@@ -25,6 +25,7 @@ export async function POST(request: NextRequest) {
             role: body.role,
             bio: body.bio,
             image: body.image,
+            socialLink: body.socialLink,
             category: body.category,
             sortOrder: body.sortOrder ?? 0,
         }).returning();

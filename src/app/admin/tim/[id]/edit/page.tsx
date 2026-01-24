@@ -9,13 +9,13 @@ export default function EditTimPage({ params }: { params: Promise<{ id: string }
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [formData, setFormData] = useState({ name: "", role: "", bio: "", image: "", category: "", sortOrder: 0 });
+    const [formData, setFormData] = useState({ name: "", role: "", bio: "", image: "", socialLink: "", category: "", sortOrder: 0 });
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await fetch(`/api/team/${resolvedParams.id}`);
-                if (res.ok) { const data = await res.json(); setFormData({ name: data.name || "", role: data.role || "", bio: data.bio || "", image: data.image || "", category: data.category || "", sortOrder: data.sortOrder || 0 }); }
+                if (res.ok) { const data = await res.json(); setFormData({ name: data.name || "", role: data.role || "", bio: data.bio || "", image: data.image || "", socialLink: data.socialLink || "", category: data.category || "", sortOrder: data.sortOrder || 0 }); }
             } catch (e) { console.error(e); }
             finally { setIsLoading(false); }
         };
@@ -51,6 +51,7 @@ export default function EditTimPage({ params }: { params: Promise<{ id: string }
                         <div><label className="block text-sm font-medium text-gray-700 mb-2">Urutan</label><input type="number" value={formData.sortOrder} onChange={(e) => setFormData((p) => ({ ...p, sortOrder: parseInt(e.target.value) || 0 }))} className="w-full px-4 py-2 border border-gray-300 rounded-lg" /></div>
                     </div>
                     <div><label className="block text-sm font-medium text-gray-700 mb-2">URL Foto</label><input type="text" value={formData.image} onChange={(e) => setFormData((p) => ({ ...p, image: e.target.value }))} className="w-full px-4 py-2 border border-gray-300 rounded-lg" /></div>
+                    <div><label className="block text-sm font-medium text-gray-700 mb-2">Link Social Media (opsional)</label><input type="text" value={formData.socialLink} onChange={(e) => setFormData((p) => ({ ...p, socialLink: e.target.value }))} placeholder="https://instagram.com/..." className="w-full px-4 py-2 border border-gray-300 rounded-lg" /></div>
                 </div>
                 <div className="flex justify-end gap-4 mt-6">
                     <Link href="/admin/tim" className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">Batal</Link>

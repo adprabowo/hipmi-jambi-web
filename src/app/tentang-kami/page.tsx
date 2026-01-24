@@ -95,6 +95,7 @@ export default async function AboutPage() {
                   role={member.role}
                   bio={member.bio || ""}
                   image={member.image || ""}
+                  socialLink={member.socialLink}
                 />
               ))}
             </div>
@@ -123,6 +124,7 @@ export default async function AboutPage() {
                   role={member.role}
                   bio={member.bio || ""}
                   image={member.image || ""}
+                  socialLink={member.socialLink}
                 />
               ))}
             </div>

@@ -7,7 +7,7 @@ import { ArrowLeft, Save } from "lucide-react";
 export default function TambahTimPage() {
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [formData, setFormData] = useState({ name: "", role: "", bio: "", image: "", category: "", sortOrder: 0 });
+    const [formData, setFormData] = useState({ name: "", role: "", bio: "", image: "", socialLink: "", category: "", sortOrder: 0 });
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -36,6 +36,7 @@ export default function TambahTimPage() {
                         <div><label className="block text-sm font-medium text-gray-700 mb-2">Urutan</label><input type="number" value={formData.sortOrder} onChange={(e) => setFormData((p) => ({ ...p, sortOrder: parseInt(e.target.value) || 0 }))} className="w-full px-4 py-2 border border-gray-300 rounded-lg" /></div>
                     </div>
                     <div><label className="block text-sm font-medium text-gray-700 mb-2">URL Foto</label><input type="text" value={formData.image} onChange={(e) => setFormData((p) => ({ ...p, image: e.target.value }))} className="w-full px-4 py-2 border border-gray-300 rounded-lg" /></div>
+                    <div><label className="block text-sm font-medium text-gray-700 mb-2">Link Social Media (opsional)</label><input type="text" value={formData.socialLink} onChange={(e) => setFormData((p) => ({ ...p, socialLink: e.target.value }))} placeholder="https://instagram.com/..." className="w-full px-4 py-2 border border-gray-300 rounded-lg" /></div>
                 </div>
                 <div className="flex justify-end gap-4 mt-6">
                     <Link href="/admin/tim" className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">Batal</Link>

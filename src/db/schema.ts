@@ -70,6 +70,7 @@ export const teamMembers = pgTable('team_members', {
     role: text('role').notNull(),
     bio: text('bio'),
     image: text('image'),
+    socialLink: text('social_link'),
     category: text('category').notNull(), // 'bpd' atau 'bakastra'
     sortOrder: integer('sort_order').default(0),
     createdAt: timestamp('created_at').defaultNow(),

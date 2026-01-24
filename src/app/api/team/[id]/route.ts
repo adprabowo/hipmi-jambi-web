@@ -38,6 +38,7 @@ export async function PUT(
                 role: body.role,
                 bio: body.bio,
                 image: body.image,
+                socialLink: body.socialLink,
                 category: body.category,
                 sortOrder: body.sortOrder,
                 updatedAt: new Date(),
