@@ -4,6 +4,9 @@ import { eq } from "drizzle-orm";
 import TeamCard from "@/components/shared/TeamCard";
 import { Target, Lightbulb, Users } from "lucide-react";
 
+// Disable caching so updates are reflected immediately
+export const dynamic = 'force-dynamic';
+
 async function getTeamMembers(category: string) {
   return await db
     .select()
