@@ -1,56 +1,84 @@
 import { MetadataRoute } from 'next'
+import { db } from "@/db";
+import { news } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://bakastrahipmijambi.vercel.app'
 
-    return [
+    // Fetch all published news
+    const allNews = await db
+        .select({
+            slug: news.slug,
+            updatedAt: news.updatedAt,
+            createdAt: news.createdAt,
+        })
+        .from(news)
+        .where(eq(news.published, true));
+
+    const newsUrls = allNews.map((item) => ({
+        url: `${baseUrl}/berita/${item.slug}`,
+        lastModified: item.updatedAt || item.createdAt || new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.7,
+    }));
+
+    const staticRoutes = [
         {
             url: baseUrl,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'weekly' as const,
             priority: 1,
         },
         {
             url: `${baseUrl}/tentang-kami`,
             lastModified: new Date(),
-            changeFrequency: 'monthly',
+            changeFrequency: 'monthly' as const,
             priority: 0.8,
         },
         {
             url: `${baseUrl}/publikasi`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'weekly' as const,
             priority: 0.9,
         },
         {
             url: `${baseUrl}/acara`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'weekly' as const,
             priority: 0.8,
         },
         {
             url: `${baseUrl}/program`,
             lastModified: new Date(),
-            changeFrequency: 'monthly',
+            changeFrequency: 'monthly' as const,
             priority: 0.7,
+        },
+        {
+            url: `${baseUrl}/berita`,
+            lastModified: new Date(),
+            changeFrequency: 'daily' as const,
+            priority: 0.8,
         },
         {
             url: `${baseUrl}/kontak`,
             lastModified: new Date(),
-            changeFrequency: 'yearly',
+            changeFrequency: 'yearly' as const,
             priority: 0.5,
         },
         {
             url: `${baseUrl}/media-center`,
             lastModified: new Date(),
-            changeFrequency: 'monthly',
+            changeFrequency: 'monthly' as const,
             priority: 0.6,
         },
         {
             url: `${baseUrl}/dukung-kami`,
             lastModified: new Date(),
-            changeFrequency: 'yearly',
+            changeFrequency: 'yearly' as const,
             priority: 0.5,
         },
     ]
+
+    return [...staticRoutes, ...newsUrls]
 }
