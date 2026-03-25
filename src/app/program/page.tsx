@@ -5,6 +5,9 @@ import { GraduationCap, Briefcase, Database, Users, FileText, ArrowRight, CheckC
 import Link from "next/link";
 import { Metadata } from 'next';
 
+// Disable caching so CMS updates are reflected immediately
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Program Unggulan',
   description: 'Inisiatif strategis Bakastra HIPMI Jambi untuk mendukung pertumbuhan ekosistem kewirausahaan dan SDM di Jambi.',

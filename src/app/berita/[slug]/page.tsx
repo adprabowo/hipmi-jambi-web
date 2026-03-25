@@ -8,6 +8,9 @@ import { ArrowLeft, Calendar, Tag, User } from "lucide-react";
 
 import { Metadata, ResolvingMetadata } from "next";
 
+// Disable caching so CMS updates are reflected immediately
+export const dynamic = 'force-dynamic';
+
 interface PageProps {
     params: Promise<{ slug: string }>;
 }

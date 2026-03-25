@@ -5,6 +5,9 @@ import { MapPin, Clock, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { Metadata } from 'next';
 
+// Disable caching so CMS updates are reflected immediately
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Agenda & Kegiatan',
   description: 'Jadwal kegiatan, diskusi forum, seminar, dan workshop terbaru dari Bakastra dan BPD HIPMI Jambi.',
