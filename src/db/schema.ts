@@ -77,6 +77,18 @@ export const teamMembers = pgTable('team_members', {
     updatedAt: timestamp('updated_at').defaultNow(),
 });
 
+// Tabel Informasi Kontak (single-row settings)
+export const contactInfo = pgTable('contact_info', {
+    id: text('id').primaryKey().default('default'),
+    officeName: text('office_name').default('Sekretariat HIPMI Jambi'),
+    address: text('address').default('Jl. Mayjen Jusuf Singedekane, Telanaipura, Kota Jambi, 36122, Provinsi Jambi, Indonesia'),
+    email: text('email').default('info@bakastra.hipmijambi.co.id'),
+    phone: text('phone').default('+62 741 1234 5678'),
+    whatsappNumber: text('whatsapp_number').default('6285377347995'),
+    operationalHours: text('operational_hours').default('Senin - Jumat: 08.00 - 17.00 WIB'),
+    updatedAt: timestamp('updated_at').defaultNow(),
+});
+
 // Types
 export type News = typeof news.$inferSelect;
 export type NewNews = typeof news.$inferInsert;
@@ -92,3 +104,6 @@ export type NewPublication = typeof publications.$inferInsert;
 
 export type TeamMember = typeof teamMembers.$inferSelect;
 export type NewTeamMember = typeof teamMembers.$inferInsert;
+
+export type ContactInfo = typeof contactInfo.$inferSelect;
+export type NewContactInfo = typeof contactInfo.$inferInsert;

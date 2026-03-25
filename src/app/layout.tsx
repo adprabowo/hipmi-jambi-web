@@ -3,6 +3,9 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { db } from "@/db";
+import { contactInfo } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -78,11 +81,27 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+async function getContactInfo() {
+  try {
+    const result = await db.select().from(contactInfo).where(eq(contactInfo.id, "default"));
+    if (result.length === 0) return undefined;
+    return {
+      officeName: result[0].officeName || "Sekretariat HIPMI Jambi",
+      address: result[0].address || "Jl. Mayjen Jusuf Singedekane, Telanaipura, Kota Jambi, 36122",
+      email: result[0].email || "info@bakastra.hipmijambi.co.id",
+      phone: result[0].phone || "+62 741 1234 5678",
+    };
+  } catch {
+    return undefined;
+  }
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const contact = await getContactInfo();
   return (
     <html lang="id">
       <head>
@@ -136,7 +155,7 @@ export default function RootLayout({
         </main>
 
         {/* Footer (Bagian Bawah) */}
-        <Footer />
+        <Footer contact={contact} />
 
       </body>
     </html>

@@ -13,6 +13,7 @@ import {
     Menu,
     X,
     Home,
+    Phone,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -25,6 +26,7 @@ const menuItems = [
     { href: "/admin/program", label: "Program", icon: FolderOpen },
     { href: "/admin/publikasi", label: "Publikasi", icon: FileText },
     { href: "/admin/tim", label: "Tim", icon: Users },
+    { href: "/admin/kontak", label: "Kontak", icon: Phone },
 ];
 
 export default function Sidebar() {

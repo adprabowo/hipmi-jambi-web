@@ -1,33 +1,41 @@
-"use client"; // PENTING: Wajib ada agar tombol bisa diklik
+"use client";
 
 import { useState } from "react";
 import { Mail, Phone, MapPin, Clock, Send, Loader2 } from "lucide-react";
 
-export default function ContactClient() {
-  // 1. STATE: Menyimpan data yang diketik pengguna
+interface ContactData {
+  officeName: string;
+  address: string;
+  email: string;
+  phone: string;
+  whatsappNumber: string;
+  operationalHours: string;
+}
+
+interface ContactClientProps {
+  contact: ContactData;
+}
+
+export default function ContactClient({ contact }: ContactClientProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: "Pertanyaan Umum", // Default value
+    subject: "Pertanyaan Umum",
     message: ""
   });
 
   const [isSending, setIsSending] = useState(false);
 
-  // 2. LOGIKA: Menangani perubahan input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // 3. LOGIKA: Saat tombol "Kirim Pesan" diklik
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Mencegah reload halaman
+    e.preventDefault();
     setIsSending(true);
 
-    // Simulasi loading sebentar agar terlihat keren
     setTimeout(() => {
-      // A. Format Pesan WhatsApp
       const text = `
 *Halo Admin Bakastra HIPMI Jambi,*
 Saya ingin mengirim pesan melalui website:
@@ -40,19 +48,16 @@ Saya ingin mengirim pesan melalui website:
 "${formData.message}"
         `.trim();
 
-      // B. Buat Link WhatsApp (Ganti nomor ini dengan nomor admin asli)
-      // Format: 628xxxxxxxx (Tanpa + atau 0 di depan)
-      const adminNumber = "6285377347995";
-      const waLink = `https://wa.me/${adminNumber}?text=${encodeURIComponent(text)}`;
-
-      // C. Buka WhatsApp di tab baru
+      const waLink = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(text)}`;
       window.open(waLink, '_blank');
 
       setIsSending(false);
-      // Reset form (opsional)
       setFormData({ name: "", email: "", subject: "Pertanyaan Umum", message: "" });
     }, 1500);
   };
+
+  // Parse address into lines for display
+  const addressLines = contact.address.split(",").map(s => s.trim());
 
   return (
     <div className="bg-white min-h-screen">
@@ -82,11 +87,13 @@ Saya ingin mengirim pesan melalui website:
                       <MapPin className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="font-bold text-gray-900">Sekretariat HIPMI Jambi</p>
+                      <p className="font-bold text-gray-900">{contact.officeName}</p>
                       <p className="text-sm text-gray-600 leading-relaxed">
-                        Jl. Mayjen Jusuf Singedekane, <br />
-                        Telanaipura, Kota Jambi, 36122 <br />
-                        Provinsi Jambi, Indonesia
+                        {addressLines.map((line, i) => (
+                          <span key={i}>
+                            {line}{i < addressLines.length - 1 && <><br /></>}
+                          </span>
+                        ))}
                       </p>
                     </div>
                   </div>
@@ -97,8 +104,8 @@ Saya ingin mengirim pesan melalui website:
                     </div>
                     <div>
                       <p className="font-bold text-gray-900">Email Resmi</p>
-                      <a href="mailto:info@bks.hipmijambi.org" className="text-sm text-gray-600 hover:text-hipmi-green">
-                        info@bakastra.hipmijambi.co.id
+                      <a href={`mailto:${contact.email}`} className="text-sm text-gray-600 hover:text-hipmi-green">
+                        {contact.email}
                       </a>
                     </div>
                   </div>
@@ -109,7 +116,7 @@ Saya ingin mengirim pesan melalui website:
                     </div>
                     <div>
                       <p className="font-bold text-gray-900">Telepon / WhatsApp</p>
-                      <p className="text-sm text-gray-600">+62 741 1234 5678</p>
+                      <p className="text-sm text-gray-600">{contact.phone}</p>
                     </div>
                   </div>
 
@@ -119,14 +126,14 @@ Saya ingin mengirim pesan melalui website:
                     </div>
                     <div>
                       <p className="font-bold text-gray-900">Jam Operasional</p>
-                      <p className="text-sm text-gray-600">Senin - Jumat: 08.00 - 17.00 WIB</p>
+                      <p className="text-sm text-gray-600">{contact.operationalHours}</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* KOLOM KANAN: Formulir (Sekarang Berfungsi) */}
+            {/* KOLOM KANAN: Formulir */}
             <div className="lg:w-2/3 bg-gray-50 p-8 rounded-2xl border border-gray-100 shadow-sm">
               <h3 className="text-2xl font-serif font-bold text-hipmi-neutral mb-6">Kirim Pesan</h3>
               <p className="text-gray-600 mb-8">
