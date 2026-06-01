@@ -23,7 +23,7 @@ async function getAllNews() {
         .select()
         .from(news)
         .where(eq(news.published, true))
-        .orderBy(desc(news.createdAt));
+        .orderBy(desc(news.date), desc(news.createdAt));
 }
 
 export default async function NewsPage() {

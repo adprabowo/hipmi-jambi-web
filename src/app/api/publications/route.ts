@@ -1,15 +1,16 @@
 import { db } from "@/db";
 import { publications } from "@/db/schema";
+import { desc } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
 import { notifyGoogleIndexing } from "@/lib/google-indexing";
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://bakastrahipmijambi.vercel.app';
 
-// GET /api/publications - List all publications
+// GET /api/publications - List all publications (sorted by date, newest first)
 export async function GET() {
     try {
-        const allPublications = await db.select().from(publications).orderBy(publications.createdAt);
+        const allPublications = await db.select().from(publications).orderBy(desc(publications.date), desc(publications.createdAt));
         return NextResponse.json(allPublications);
     } catch (error) {
         console.error("Error fetching publications:", error);

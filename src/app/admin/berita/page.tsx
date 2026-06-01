@@ -5,8 +5,11 @@ import { Plus, Pencil, Trash2 } from "lucide-react";
 import { desc } from "drizzle-orm";
 import DeleteButton from "./DeleteButton";
 
+// Disable caching so changes are reflected immediately
+export const dynamic = 'force-dynamic';
+
 async function getNews() {
-    return await db.select().from(news).orderBy(desc(news.createdAt));
+    return await db.select().from(news).orderBy(desc(news.date), desc(news.createdAt));
 }
 
 export default async function BeritaPage() {

@@ -21,7 +21,7 @@ async function getPublications() {
     .select()
     .from(publications)
     .where(eq(publications.published, true))
-    .orderBy(desc(publications.createdAt));
+    .orderBy(desc(publications.date), desc(publications.createdAt));
 }
 
 export default async function PublicationsPage() {

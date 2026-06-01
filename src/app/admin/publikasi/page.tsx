@@ -5,8 +5,11 @@ import { Plus, Pencil } from "lucide-react";
 import { desc } from "drizzle-orm";
 import DeleteButton from "../berita/DeleteButton";
 
+// Disable caching so changes are reflected immediately
+export const dynamic = 'force-dynamic';
+
 async function getPublications() {
-    return await db.select().from(publications).orderBy(desc(publications.createdAt));
+    return await db.select().from(publications).orderBy(desc(publications.date), desc(publications.createdAt));
 }
 
 export default async function PublikasiPage() {

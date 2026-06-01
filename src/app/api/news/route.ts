@@ -1,13 +1,13 @@
 import { db } from "@/db";
 import { news } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET /api/news - List all news
+// GET /api/news - List all news (sorted by date, newest first)
 export async function GET() {
     try {
-        const allNews = await db.select().from(news).orderBy(news.createdAt);
+        const allNews = await db.select().from(news).orderBy(desc(news.date), desc(news.createdAt));
         return NextResponse.json(allNews);
     } catch (error) {
         console.error("Error fetching news:", error);

@@ -14,7 +14,7 @@ async function getLatestNews() {
     .select()
     .from(news)
     .where(eq(news.published, true))
-    .orderBy(desc(news.createdAt))
+    .orderBy(desc(news.date), desc(news.createdAt))
     .limit(3);
 }
 

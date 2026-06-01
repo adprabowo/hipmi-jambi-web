@@ -1,12 +1,13 @@
 import { db } from "@/db";
 import { events } from "@/db/schema";
+import { desc } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET /api/events - List all events
+// GET /api/events - List all events (sorted by date, newest first)
 export async function GET() {
     try {
-        const allEvents = await db.select().from(events).orderBy(events.createdAt);
+        const allEvents = await db.select().from(events).orderBy(desc(events.date), desc(events.createdAt));
         return NextResponse.json(allEvents);
     } catch (error) {
         console.error("Error fetching events:", error);

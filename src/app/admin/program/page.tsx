@@ -5,6 +5,9 @@ import { Plus, Pencil } from "lucide-react";
 import { desc } from "drizzle-orm";
 import DeleteButton from "../berita/DeleteButton";
 
+// Disable caching so changes are reflected immediately
+export const dynamic = 'force-dynamic';
+
 async function getPrograms() {
     return await db.select().from(programs).orderBy(desc(programs.createdAt));
 }

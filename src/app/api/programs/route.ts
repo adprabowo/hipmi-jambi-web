@@ -1,12 +1,13 @@
 import { db } from "@/db";
 import { programs } from "@/db/schema";
+import { desc } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET /api/programs - List all programs
+// GET /api/programs - List all programs (sorted by newest first)
 export async function GET() {
     try {
-        const allPrograms = await db.select().from(programs).orderBy(programs.createdAt);
+        const allPrograms = await db.select().from(programs).orderBy(desc(programs.createdAt));
         return NextResponse.json(allPrograms);
     } catch (error) {
         console.error("Error fetching programs:", error);

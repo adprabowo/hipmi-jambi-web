@@ -22,7 +22,7 @@ async function getEvents() {
     .select()
     .from(events)
     .where(eq(events.published, true))
-    .orderBy(desc(events.createdAt));
+    .orderBy(desc(events.date), desc(events.createdAt));
 }
 
 export default async function EventsPage() {

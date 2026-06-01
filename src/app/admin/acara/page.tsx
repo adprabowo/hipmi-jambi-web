@@ -5,8 +5,11 @@ import { Plus, Pencil, Trash2 } from "lucide-react";
 import { desc } from "drizzle-orm";
 import DeleteButton from "../berita/DeleteButton";
 
+// Disable caching so changes are reflected immediately
+export const dynamic = 'force-dynamic';
+
 async function getEvents() {
-    return await db.select().from(events).orderBy(desc(events.createdAt));
+    return await db.select().from(events).orderBy(desc(events.date), desc(events.createdAt));
 }
 
 export default async function AcaraPage() {
